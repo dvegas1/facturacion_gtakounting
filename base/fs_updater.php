@@ -199,7 +199,7 @@ class fs_updater extends fs_app
 
     private function actualizar_plugin_pago($idplugin, $name, $key)
     {
-        $url = 'https://www.facturascripts.com/DownloadBuild2017/' . $idplugin . '/stable?xid=' . $this->xid . '&key=' . $key;
+        $url = 'https://www.gtakounting.com/intersecom/DownloadBuild2017.html/' . $idplugin . '/stable?xid=' . $this->xid . '&key=' . $key;
 
         /// descargamos el zip
         if (!@fs_file_download($url, FS_FOLDER . '/update-pay.zip')) {

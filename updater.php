@@ -83,7 +83,7 @@ $updater = new fs_updater();
             <div class="row">
                 <div class="col-sm-9">
                     <p class="help-block">
-                        Este actualizador permite actualizar <b>tanto el núcleo</b> de FacturaScripts
+                        Este actualizador permite actualizar <b>tanto el núcleo</b> de gtakounting
                         <b>como sus plugins</b>, incluso los de pago y los privados.
                         Si hay una actualización del núcleo tendrás que actualizar antes de poder ver si
                         también hay actualizaciones de plugins.
