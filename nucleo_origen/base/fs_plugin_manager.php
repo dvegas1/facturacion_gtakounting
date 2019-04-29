@@ -227,8 +227,8 @@ class fs_plugin_manager
                 'nombre' => "facturacion_base",
                 'tipo' => "gratis",
                 'descripcion' => "Plugin con las funciones básicas de facturación, contabilidad e informes simples.",
-                'link' => "https://github.com/NeoRazorX/facturacion_base",
-                'zip_link' => "https://github.com/NeoRazorX/facturacion_base/archive/master.zip",
+                'link' => "https://github.com/dvegas1/facturacion_base/",
+                'zip_link' => "https://github.com/dvegas1/facturacion_base/facturacion_base.zip",
                 'imagen' => "",
                 'estable' => true,
                 'version' => 140,
@@ -457,7 +457,7 @@ class fs_plugin_manager
             'wizard' => FALSE,
         ];
 
-        if (!file_exists(FS_FOLDER . '/plugins/' . $plugin_name . '/facturascripts.ini')) {
+        if (!file_exists(FS_FOLDER . '/plugins/' . $plugin_name . '/gtfacturacion.ini')) {
             return $plugin;
         }
 

@@ -429,7 +429,7 @@ class fs_plugin_manager
             'description' => 'Sin descripción.',
             'download2_url' => '',
             'enabled' => FALSE,
-            'error_msg' => 'Falta archivo facturascripts.ini',
+            'error_msg' => 'Falta archivo gtfacturacion.ini',
             'idplugin' => NULL,
             'min_version' => $this->version,
             'name' => $plugin_name,
@@ -441,11 +441,11 @@ class fs_plugin_manager
             'wizard' => FALSE,
         ];
 
-        if (!file_exists(FS_FOLDER . '/plugins/' . $plugin_name . '/facturascripts.ini')) {
+        if (!file_exists(FS_FOLDER . '/plugins/' . $plugin_name . '/gtfacturacion.ini')) {
             return $plugin;
         }
 
-        $ini_file = parse_ini_file(FS_FOLDER . '/plugins/' . $plugin_name . '/facturascripts.ini');
+        $ini_file = parse_ini_file(FS_FOLDER . '/plugins/' . $plugin_name . '/gtfacturacion.ini');
         foreach (['description', 'idplugin', 'min_version', 'update_url', 'version', 'version_url', 'wizard'] as $field) {
             if (isset($ini_file[$field])) {
                 $plugin[$field] = $ini_file[$field];
