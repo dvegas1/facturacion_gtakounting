@@ -391,7 +391,7 @@ class fs_updater extends fs_app
 
         $version_actual = $this->plugin_manager->version;
         $this->updates['version'] = $version_actual;
-        $nueva_version = @fs_file_get_contents('https://raw.githubusercontent.com/NeoRazorX/facturascripts_2015/master/VERSION');
+        $nueva_version = @fs_file_get_contents('https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/VERSION');
         if (floatval($version_actual) < floatval($nueva_version)) {
             $this->updates['core'] = $nueva_version;
         } else {
