@@ -110,8 +110,8 @@ class fs_updater extends fs_app
     private function actualizar_nucleo()
     {
         $urls = array(
-            'https://github.com/NeoRazorX/facturascripts_2015/archive/master.zip',
-            'https://codeload.github.com/NeoRazorX/facturascripts_2015/zip/master'
+            'https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/nucleo_origen.zip',
+            'https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/'
         );
 
         foreach ($urls as $url) {
@@ -121,7 +121,7 @@ class fs_updater extends fs_app
             }
 
             $zip = new ZipArchive();
-            $zip_status = $zip->open(FS_FOLDER . '/update-core.zip', ZipArchive::CHECKCONS);
+            $zip_status = $zip->open(FS_FOLDER . '/nucleo_origen.zip', ZipArchive::CHECKCONS);
             if ($zip_status !== TRUE) {
                 $this->core_log->new_error('Ha habido un error con el archivo update-core.zip. Código: ' . $zip_status
                     . '. Intente de nuevo en unos minutos.');
@@ -138,8 +138,8 @@ class fs_updater extends fs_app
             }
 
             /// ahora hay que copiar todos los archivos de facturascripts-master a la raíz y borrar
-            fs_file_manager::recurse_copy(FS_FOLDER . '/facturascripts_2015-master/', FS_FOLDER);
-            fs_file_manager::del_tree(FS_FOLDER . '/facturascripts_2015-master/');
+            fs_file_manager::recurse_copy(FS_FOLDER . '/facturascripts_2015-gta/', FS_FOLDER);
+            fs_file_manager::del_tree(FS_FOLDER . '/facturascripts_2015-gta/');
 
             $this->core_log->new_message('Actualizado correctamente.');
             $this->actualizacion_correcta('');
@@ -157,13 +157,13 @@ class fs_updater extends fs_app
             }
 
             /// descargamos el zip
-            if (!@fs_file_download($plugin['update_url'], FS_FOLDER . '/update.zip')) {
+            if (!@fs_file_download($plugin['update_url'], FS_FOLDER . '/nucleo_origen.zip')) {
                 $this->core_log->new_error('Error al descargar el archivo update.zip. Intente de nuevo en unos minutos.');
                 return false;
             }
 
             $zip = new ZipArchive();
-            $zip_status = $zip->open(FS_FOLDER . '/update.zip', ZipArchive::CHECKCONS);
+            $zip_status = $zip->open(FS_FOLDER . '/nucleo_origen.zip', ZipArchive::CHECKCONS);
             if ($zip_status !== TRUE) {
                 $this->core_log->new_error('Ha habido un error con el archivo update.zip. Código: ' . $zip_status
                     . '. Intente de nuevo en unos minutos.');
@@ -290,7 +290,7 @@ class fs_updater extends fs_app
         if ($this->updates['core']) {
             $this->tr_updates = '<tr>'
                 . '<td><b>Núcleo</b></td>'
-                . '<td>Núcleo de FacturaScripts.</td>'
+                . '<td>Núcleo de Gtakounting.</td>'
                 . '<td class="text-right">' . $this->plugin_manager->version . '</td>'
                 . '<td class="text-right"><a href="' . FS_COMMUNITY_URL . '/index.php?page=community_changelog&version='
                 . $this->updates['core'] . '" target="_blank">' . $this->updates['core'] . '</a></td>'
