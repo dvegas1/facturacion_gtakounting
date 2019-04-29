@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : fuentes_csv.xml
+    Description:
+        Estructura de la tabla fuentes_csv.
+-->
+<tabla>
+   <columna>
+      <nombre>id</nombre>
+      <tipo>serial</tipo>
+      <nulo>NO</nulo>
+      <defecto>nextval('fuentes_csv_id_seq'::regclass)</defecto>
+   </columna>
+   <columna>
+      <nombre>url</nombre>
+      <tipo>character varying(255)</tipo>
+      <nulo>NO</nulo>
+   </columna>
+   <columna>
+      <nombre>protocolo</nombre>
+      <tipo>character varying(20)</tipo>
+      <nulo>NO</nulo>
+   </columna>
+   <columna>
+      <nombre>usuario</nombre>
+      <tipo>character varying(255)</tipo>
+   </columna>
+   <columna>
+      <nombre>password</nombre>
+      <tipo>character varying(255)</tipo>
+   </columna>
+   <columna>
+      <nombre>ultima_comprobacion</nombre>
+      <tipo>bigint</tipo>
+   </columna>
+   <columna>
+      <nombre>estado</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>separador</nombre>
+      <tipo>character varying(2)</tipo>
+   </columna>
+   <columna>
+      <nombre>codalmacen</nombre>
+      <tipo>character varying(4)</tipo>
+      <nulo>YES</nulo>
+   </columna>
+   <columna>
+      <nombre>codproveedor</nombre>
+      <tipo>character varying(6)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_codproveedor</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ref_prov</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ref</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_desc</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_iva</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_precio</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_precio_compra</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_dto_compra</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_precio_coste</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_precio_tarifa1</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_precio_tarifa2</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_precio_tarifa3</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_stock</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_nostock</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_stockmin</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_stockmax</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ventasinstock</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_barras</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_partnumber</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_fabricante</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_familia</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_equivalencia</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_secompra</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_sevende</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_bloqueado</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_publico</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_observaciones</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_factualizado</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_url_img</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_id_prestashop</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_activo</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_desc_corta</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_desc_larga</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_anchura</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_altura</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_profundidad</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_peso</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_gastos_envio</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_redireccion</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_redireccion_id</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_precio</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_oferta</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_oferta_desde</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_oferta_hasta</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_txt_no_disponible</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_meta_title</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_meta_descrip</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_meta_keys</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>col_ps_factualizado</nombre>
+      <tipo>character varying(50)</tipo>
+   </columna>
+   <columna>
+      <nombre>codificacion</nombre>
+      <tipo>integer</tipo>
+   </columna>
+   <columna>
+      <nombre>cron</nombre>
+      <tipo>boolean</tipo>
+   </columna>
+   <columna>
+      <nombre>cron_hour</nombre>
+      <tipo>integer</tipo>
+   </columna>
+   <columna>
+      <nombre>con_iva</nombre>
+      <tipo>boolean</tipo>
+   </columna>
+   <columna>
+      <nombre>compra_con_iva</nombre>
+      <tipo>boolean</tipo>
+   </columna>
+   <columna>
+      <nombre>pvp_max</nombre>
+      <tipo>boolean</tipo>
+   </columna>
+   <columna>
+      <nombre>codimpuesto</nombre>
+      <tipo>character varying(10)</tipo>
+      <nulo>YES</nulo>
+   </columna>
+   <columna>
+      <nombre>sufijo</nombre>
+      <tipo>character varying(10)</tipo>
+      <nulo>YES</nulo>
+   </columna>
+   <columna>
+      <nombre>perfil</nombre>
+      <tipo>integer</tipo>
+      <defecto>1</defecto>
+   </columna>
+   <restriccion>
+      <nombre>fuentes_csv_pkey</nombre>
+      <consulta>PRIMARY KEY (id)</consulta>
+   </restriccion>
+</tabla>

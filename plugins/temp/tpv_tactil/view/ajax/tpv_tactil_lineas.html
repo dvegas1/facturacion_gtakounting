@@ -1,0 +1,106 @@
+{loop="$fsc->resultado"}
+<tr id="linea_{$fsc->numlineas+$counter}">
+
+
+
+
+
+
+  <td id="ch_impresion" class="eliminarlinea">
+  <label class="checkbox-inline">
+  <input  type="checkbox" name="impresion_{$fsc->numlineas+$counter}" id="impresion_{$fsc->numlineas+$counter}"
+  onclick="validarCheck('impresion_{$fsc->numlineas+$counter}')"
+  class="eliminarlinea checkmark ch_impresion" value="0"/>
+  </label>
+  </td>
+
+
+
+
+
+
+
+   <td>
+       <input type="hidden" name="referencia_{$fsc->numlineas+$counter}" value="{$value->referencia}"/>
+       <input type="hidden" id="pvp_{$fsc->numlineas+$counter}" name="pvp_{$fsc->numlineas+$counter}" value="{$value->pvp}"/>
+       <input type="hidden" id="iva_{$fsc->numlineas+$counter}" name="iva_{$fsc->numlineas+$counter}" value="{$value->get_iva()}"/>
+       <input type="hidden" id="codimpuesto_{$fsc->numlineas+$counter}" name="codimpuesto_{$fsc->numlineas+$counter}" value="{$value->codimpuesto}"/>
+
+       {if="isset($value->codcombinacion)"}
+      <input type="hidden" id="codcombinacion_{$fsc->numlineas+$counter}" name="codcombinacion_{$fsc->numlineas+$counter}" value="{$value->codcombinacion}"/>
+      {else}
+      <input type="hidden" id="codcombinacion_{$fsc->numlineas+$counter}" name="codcombinacion_{$fsc->numlineas+$counter}"/>
+      {/if}
+      <div class="input-group">
+         <span class="input-group-addon">
+            <a target="_blank" href="{$value->url()}">{$value->referencia}</a>
+         </span>
+         <input type="text" class="form-control" name="desc_{$fsc->numlineas+$counter}" value="{$value->descripcion}" onclick="this.select()"/>
+      </div>
+   </td>
+   <td>
+      <div class="input-group">
+         <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="linea_sum_ud('{$fsc->numlineas+$counter}','-1')">-</button>
+         </span>
+         <input class="form-control text-right" type="text" id="cantidad_{$fsc->numlineas+$counter}" name="cantidad_{$fsc->numlineas+$counter}" value="1" onkeyup="recalcular()" autocomplete="off"/>
+         <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="linea_sum_ud('{$fsc->numlineas+$counter}','1')">+</button>
+         </span>
+      </div>
+   </td>
+
+
+   <td>
+      {if="$fsc->tpv_config['tpv_linea_libre']"}
+
+
+
+
+
+
+
+
+
+      <div class="input-group">
+         <input type="text" id="pvpi_{$fsc->numlineas+$counter}" name="pvpi_{$fsc->numlineas+$counter}" value="{$value->pvp_iva()}" class="form-control text-right" onkeyup="set_pvpi('{$fsc->numlineas+$counter}')" onclick="this.select()"/>
+         <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="get_keyboard('pvpi_{$fsc->numlineas+$counter}','pvpi','{$fsc->numlineas+$counter}')">
+               <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+            </button>
+         </span>
+      </div>
+      {else}
+      <input type="text" id="pvpi_{$fsc->numlineas+$counter}" name="pvpi_{$fsc->numlineas+$counter}" value="{$value->pvp_iva()}" class="form-control text-right" readonly=""/>
+      {/if}
+   </td>
+   <td>
+
+      <div class="input-group">
+
+<input class="form-control text-right" type="text" id="pvpt_{$fsc->numlineas+$counter}" name="pvpt_{$fsc->numlineas+$counter}" disabled="disabled"/>
+<span class="input-group-btn">
+
+<button class="btn btn-danger" type="button" onclick="$('#linea_{$fsc->numlineas+$counter}').remove();recalcular();document.f_tpv.codbar.focus();">
+
+
+
+
+
+
+
+
+
+               <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+
+
+
+         </span>
+      </div>
+
+
+
+   </td>
+</tr>
+{/loop}

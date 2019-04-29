@@ -1,0 +1,24 @@
+<div class="table-responsive">
+   <table class="table table-hover">
+      <thead>
+         <tr>
+            <th>Combinación</th>
+            <th class="text-right">PVP</th>
+            <th class="text-right">Stock</th>
+         </tr>
+      </thead>
+      {loop="$fsc->results"}
+      <tr>
+         <td>
+            <a href="#" onclick="add_combinacion('{$value['ref']}','{function="base64_encode($value['desc'])"}','{$value['pvp']}','{$value['dto']}','{$value['codimpuesto']}','{$value['codigo']}')">{$value['txt']}</a>
+         </td>
+         <td class="text-right">{$fsc->show_precio($value['pvp']*(100+$value['iva'])/100)}</td>
+         <td class="text-right">{$value['stockfis']}</td>
+      </tr>
+      {else}
+      <tr class="danger">
+         <td colspan="3">No hay combinaciones definidas.</td>
+      </tr>
+      {/loop}
+   </table>
+</div>

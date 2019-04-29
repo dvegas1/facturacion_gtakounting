@@ -1,0 +1,267 @@
+{include="header"}
+<script src="plugins/caja_general/view/js/jquery.tablesorter.min.js"></script>
+<script src="plugins/caja_general/view/js/jquery.tablesorter.widgets.min.js"></script>
+
+<script type="text/javascript">
+   function show_nueva_caja()
+   {
+      $("#modal_nueva_caja").modal('show');
+      document.f_nueva_caja.almacen.focus();
+   }
+
+   function show_cierre_caja(id,saldoc)
+   {
+      $("#modal_cierre_caja").modal('show');
+      document.f_cierre_caja.cierre.value = id;
+      document.f_cierre_caja.saldo.value = saldoc;
+      document.f_cierre_caja.d_fin.focus();
+   }
+   
+   $(document).ready(function() {
+      document.f_busca_caja.filtro_almacen.focus();
+     
+      $("#b_nueva_caja").click(function(event) {
+         event.preventDefault();
+         show_nueva_caja();
+      });
+      
+      $("#myTable").tablesorter({
+          widgets        : ['zebra', 'columns'],
+          usNumberFormat : false,
+          sortReset      : true,
+          sortRestart    : true
+      });      
+   });  
+   
+   function delete_caja(id)
+   {
+         bootbox.confirm({
+            message: '¿Realmente desea eliminar la caja ' + id + '?',
+            title: '<b>Atención</b>',
+            callback: function(result) {
+               if (result) {
+                  window.location.href = "{$fsc->url()}&delete=" + id;
+               }
+            }
+         });
+   }   
+</script>
+
+<div class="container-fluid hidden-print" style="margin-top: 10px; margin-bottom: 10px;">
+   <div class="row">
+      <!-- Estos botones se muestran siempre, ocupando 4 o 8 de las 12 columnas -->
+      <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
+         <a href="{$fsc->url()}" class="btn btn-sm btn-default">
+            <span class="glyphicon glyphicon-refresh"></span>
+         </a>
+         <a href="#" id="b_imprimir" class="btn btn-sm btn-default" onclick="window.print();">
+            <span class="glyphicon glyphicon-print"></span>
+            <span class="hidden-xs">&nbsp; Imprimir</span>
+         </a>           
+         <a href="#" id="b_nueva_caja" class="btn btn-sm btn-success">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
+            <span class="hidden-xs">&nbsp; Nueva Caja</span>
+         </a>                       
+      </div>
+      <!-- Se muestra si la resolución es LG, sino se oculta -->
+      <div class="col-lg-8 col-md-7 col-sm-10 col-xs-10 text-right">
+         <div class="hidden-lg hidden-md"><br/></div>
+         <form id="f_busca_caja" name="f_busca_caja" action="{$fsc->url()}" method="post" class="form form-inline">
+            <div class="form-group">
+               <input class="form-control datepicker" type="text" name="desde" value="{$fsc->busqueda['desde']}" size="10" placeholder="Desde..."/>
+            </div>
+            <div class="form-group">
+               <input class="form-control datepicker" type="text" name="hasta" value="{$fsc->busqueda['hasta']}" size="10" placeholder="Hasta..."/>
+            </div>             
+            <div class="form-group">
+                <select name="filtro_almacen" class="form-control" onchange="this.form.submit();">
+                    <option value=""{if="$fsc->busqueda['filtro_almacen']==''"} selected{/if}>Todos</option>
+                    {loop="$fsc->almacenes"}
+                        <option value="{$value->codalmacen}" {if="$fsc->busqueda['filtro_almacen']== $value->codalmacen"} selected{/if}>{$value->nombre}</option>
+                    {/loop}
+                </select>                
+            </div>
+            <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled = true; this.form.submit();">
+               <span class="glyphicon glyphicon-search"></span>
+            </button>
+         </form>
+      </div>
+   </div>
+</div>
+
+<h2 class="visible-print">Cajas General</h2>
+
+
+<div class="table-responsive">
+    <table class="table table-hover" id="myTable">
+        <thead>
+            <tr>
+                <th class="text-left">Caja ID</th>
+                <th class="text-left">Almacen</th>
+                <th class="text-left">Empleado Apertura</th>
+                <th class="text-center">Fecha Apertura</th>
+                <th class="text-right">Dinero Inicio</th>
+                <th class="text-right">Apuntes</th>
+                <th class="text-right">Arqueado</th>
+                <th class="text-right">Descuadre</th>
+                <th class="text-right hidden-print">Acciones</th> 
+            </tr>
+        </thead>
+        <!--{$total_caja=0}-->      
+        {loop="$fsc->resultado"}
+            <tr class="{if condition="$value->abierta()"} bg-warning {elseif condition="$value->descuadre != 0"} bg-danger {/if}" href="#" {if="!$fsc->allow_delete"} onclick="window.location.href ='{$value->url()}'; return false;" {/if}>
+                         <td>{$value->id}</td>
+                         <td>{$value->nombre_almacen()->nombre}</td>
+                         <td>
+                             {if="$value->codagente"}
+                                {$value->agente->get_fullname()}
+                             {else}
+                             -
+                             {/if}
+                         </td>
+                         <td class="text-center">{$value->f_inicio}</td>
+                         <td class="text-right">{$fsc->show_precio($value->d_inicio, FALSE, TRUE, 2)}</td>
+
+                         <td class="text-right">{$fsc->show_numero($fsc->cajamov_model->apuntes_contar($value->id),0)}</td>
+                         <td class="text-right">
+                         {if="!$value->abierta()"}
+                            {$fsc->show_precio($value->d_fin, FALSE, TRUE, 2)}
+                         {else}
+                             -
+                         {/if}
+                         </td>
+                         <td class="text-right">
+                         {if="!$value->abierta()"}
+                            {$fsc->show_precio($value->descuadre, FALSE, TRUE, 2)}
+                         {else}
+                             -
+                         {/if}
+                         </td>
+                         <td class="text-right hidden-print">
+                                <a href="{$value->url()}" class="btn btn-xs btn-success" title="Apuntes">
+                                    <span class="glyphicon glyphicon-plus "></span>
+                                </a>
+                             {if="$fsc->allow_delete"}
+                             <div class="btn-group">
+                                 {if="$value->abierta()"}
+                                 <a href="#" class="btn btn-xs btn-warning" title="Cerrar caja" onclick="show_cierre_caja('{$value->id}','{$fsc->show_numero($fsc->cajamov_model->apuntes_suma($value->id),2)}')" >
+                                     <span class="glyphicon glyphicon-lock"></span>
+                                 </a>
+                                 {/if}
+                                 <a href="#" class="btn btn-xs btn-danger" title="Eliminar" onclick="delete_caja('{$value->id}')" >
+                                     <span class="glyphicon glyphicon-trash"></span>
+                                 </a>
+                             </div>
+                             {/if}
+                         </td>         
+                         <!--{$total_caja+=$value->d_fin}-->
+            </tr>
+        {else}
+            <tr class="bg-warning">
+                <td colspan="9">Sin resultados.</td>
+            </tr>
+        {/loop}
+        
+        {if="$fsc->offset==0"}
+            <tr>
+                <td colspan="6"></td>
+                <td class="text-right"><b>{$fsc->show_precio($total_caja, FALSE, TRUE, 2)}</b></td>
+                <td colspan="2"></td>
+            </tr>
+        {/if}      
+
+    </table>
+</div>      
+
+<ul class="pager">
+    {if="$fsc->anterior_url()!=''"}
+    <li class="previous">
+        <a href="{$fsc->anterior_url()}">
+            <span class="glyphicon glyphicon-chevron-left"></span> &nbsp; Anteriores
+        </a>
+    </li>
+    {/if}
+    {if="$fsc->siguiente_url()!=''"}
+    <li class="next">
+        <a href="{$fsc->siguiente_url()}">
+            Siguientes &nbsp; <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </li>
+    {/if}
+</ul>
+
+<form class="form-horizontal" role="form" name="f_nueva_caja" action="{$fsc->url()}" method="post">
+   <div class="modal" id="modal_nueva_caja">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title">Nueva Caja</h4>
+            </div>
+            <div class="modal-body">
+
+               {if="$fsc->almacenes"}
+               <div class="form-group">
+                  <label class="col-lg-4 col-md-4 col-sm-4 control-label">Selecciona Almacen</label>
+                  <div class="col-lg-8 col-md-8 col-sm-8">
+                     <select name="almacen" class="form-control">
+                        <option value="">Ninguno</option>
+                        {loop="$fsc->almacenes"}
+                        <option value="{$value->codalmacen}">{$value->nombre}</option>
+                        {/loop}
+                     </select>
+                  </div>
+               </div>
+               {/if}
+               <div class="form-group">
+                  <label class="col-lg-4 col-md-4 col-sm-4 control-label">Dinero Inicial en Caja</label>
+                  <div class="col-lg-8 col-md-8 col-sm-8">
+                      <input class="form-control" type="number" step="any" name="d_inicio" autocomplete="off"/>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+                  <span class="glyphicon glyphicon-floppy-disk"></span> &nbsp; Guardar
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<form class="form-horizontal" role="form" name="f_cierre_caja" action="{$fsc->url()}" method="post">
+   <input type="hidden" name="cierre" value=""/>
+   <div class="modal" id="modal_cierre_caja">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+               <h4 class="modal-title">Cierre de Caja</h4>
+            </div>
+            <div class="modal-body">
+               <div class="form-group">
+                  <label class="col-lg-4 col-md-4 col-sm-4 control-label">Saldo en Caja actual</label>
+                  <div class="col-lg-8 col-md-8 col-sm-8">
+                      <input class="form-control" type="text" name="saldo" autocomplete="off" value="" disabled=""/>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label class="col-lg-4 col-md-4 col-sm-4 control-label">Dinero Contado en Caja</label>
+                  <div class="col-lg-8 col-md-8 col-sm-8">
+                     <input class="form-control" type="text" name="d_fin" autocomplete="off" value=""/>
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+                  <span class="glyphicon glyphicon-floppy-disk"></span> &nbsp; Cerrar Caja
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+{include="footer"}
+

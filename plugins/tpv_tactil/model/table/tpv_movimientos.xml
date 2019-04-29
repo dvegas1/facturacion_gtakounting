@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : tpv_movimientos.xml
+    Description:
+        Estructura de la tabla tpv_movimientos.
+-->
+<tabla>
+    <columna>
+        <nombre>cantidad</nombre>
+        <tipo>double precision</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>codtpv_agente</nombre>
+        <tipo>character varying(6)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>descripcion</nombre>
+        <tipo>character varying(200)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>fecha</nombre>
+        <tipo>date</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>idtpv_arqueo</nombre>
+        <tipo>character varying(8)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>idtpv_movimiento</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+        <defecto>nextval('tpv_movimientos_idtpv_movimiento_seq'::regclass)</defecto>
+    </columna>
+    <restriccion>
+        <nombre>tpv_movimientos_pkey</nombre>
+        <consulta>PRIMARY KEY (idtpv_movimiento)</consulta>
+    </restriccion>
+</tabla>

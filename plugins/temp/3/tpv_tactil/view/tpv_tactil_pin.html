@@ -1,0 +1,141 @@
+{include="header"}
+
+<script type="text/javascript">
+    function pedir_pin(cod) {
+        document.f_cambio_agente_pin.cambio_agente.value = cod;
+        $("#modal_cambio_agente_pin").modal('show');
+        document.f_cambio_agente_pin.pin.focus();
+    }
+</script>
+
+{if="$fsc->terminal->cambiar_agente"}
+<form name="f_cambio_agente" action="{$fsc->url()}" method="post" class="form">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="page-header">
+               <h1>
+                  <span class="glyphicon glyphicon-user"></span>
+                  Selecciona empleado
+               </h1>
+            </div>
+            <div class="form-group">
+               <div class="input-group">
+                  <span class="input-group-addon">RFID</span>
+                  <input type="text" name="rfid_agente" class="form-control" autocomplete="off" autofocus=""/>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         {loop="$fsc->agente->all()"}
+         <div class="col-sm-4">
+            {if="$value->pin"}
+            <a href="#" class="btn btn-block btn-default" onclick="pedir_pin('{$value->codagente}')">
+               <span class="glyphicon glyphicon-lock"></span>&nbsp; {$value->get_fullname()}
+            </a>
+            {else}
+            <a href="{$fsc->url()}&cambio_agente={$value->codagente}" class="btn btn-block btn-default">
+               <span class="glyphicon glyphicon-user"></span>&nbsp; {$value->get_fullname()}
+            </a>
+            {/if}
+            <br/>
+         </div>
+         {/loop}
+      </div>
+   </div>
+</form>
+{else}
+<form name="f_cambio_agente" action="{$fsc->url()}" method="post" class="form">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="page-header">
+               <h1>
+                  <span class="glyphicon glyphicon-user"></span>
+                  Selecciona empleado
+               </h1>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         {loop="$fsc->agente->all()"}
+         <div class="col-sm-4">
+            {if="$value->codagente==$fsc->agente->codagente"}
+            <a href="#" class="btn btn-block btn-default" onclick="pedir_pin('{$value->codagente}')">
+               <span class="glyphicon glyphicon-lock"></span>&nbsp; {$value->get_fullname()}
+            </a>
+            {/if}
+         </div>
+         {/loop}
+      </div>
+   </div>
+</form>
+{/if}
+
+<div class="modal fade" id="modal_ayuda_ticket" tabindex="-1" role="dialog">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">
+               <span class="glyphicon glyphicon-print"></span> Imprimir tickets
+            </h4>
+            <p class="help-block">
+               Para poder imprimir tickets son necesarias varias cosas:
+            </p>
+         </div>
+         <div class="modal-body">
+            <ul>
+               <li>
+                  Una impresora de tickets.
+                  <i>No se imprimen tickets en otro tipo de impresoras.</i>
+               </li>
+               <li>
+                  Ejecutar la aplicación
+                  <a target="_blank" href="https://www.facturascripts.com/comm3/index.php?page=community_item&id=170">Remote printer</a>.
+               </li>
+            </ul>
+            <a target="_blank" href="https://www.facturascripts.com/comm3/index.php?page=community_item&id=170" class="thumbnail">
+               <img src="https://i.imgur.com/BFLzvS4.png" alt="remote-printer"/>
+            </a>
+            <p class="help-block">
+               El campo <b>URL de la API de FacturaScripts</b> se refiere a la dirección
+               web donde tengas FacturaScripts. Si en la barra de tu nevagador pone
+               <b>http://localhost/...</b>, entonces debes poner: <b>http://localhost/api.php</b>
+            </p>
+         </div>
+      </div>
+   </div>
+</div>
+
+<form name="f_cambio_agente_pin" action="index.php" method="get" class="form">
+    <input type="hidden" name="page" value="{$fsc->page->name}"/>
+    <input type="hidden" name="cambio_agente"/>
+    <div class="modal" id="modal_cambio_agente_pin">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cambiar empleado</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">PIN</span>
+                            <input type="password" name="pin" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="hidden">
+   <img src="http://localhost:10080?terminal={$fsc->terminal->id}" alt="remote-printer"/>
+</div>
+
+{include="footer"}

@@ -1,0 +1,355 @@
+{include="header"}
+
+<style>
+   .content-wrapper, .right-side {
+      background-color: #ecf0f5 !important;
+   }
+   .gastos {
+      color: red;
+   }   
+</style>
+
+<form class="form" name="f_dashboard_avanzado" action="{$fsc->url()}" method="post">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-12">
+            <ul class="nav nav-pills">
+               <li role="presentation">
+                  <a href="index.php?page=dashboard_avanzado&year={$fsc->codejercicio}">Resumen {$fsc->codejercicio}</a>
+               </li>
+               <li role="presentation" class="active">
+                  <a href="#">Tesorería</a>
+               </li>
+            </ul>
+            <br/>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-6">
+            <div class="box">
+               <div class="box-header with-border">
+                  <div class="pull-left">
+                     <span class="btn-group">
+                        <a class="btn btn-xs btn-default" href="{$fsc->url()}" title="Recargar la página">
+                           <span class="glyphicon glyphicon-refresh"></span>
+                        </a>
+                        {if="$fsc->page->is_default()"}
+                        <a class="btn btn-xs btn-default active" href="{$fsc->url()}&amp;default_page=FALSE" title="desmarcar como página de inicio">
+                           <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                        {else}
+                        <a class="btn btn-xs btn-default" href="{$fsc->url()}&amp;default_page=TRUE" title="marcar como página de inicio">
+                           <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                        {/if}
+                        <a class="btn btn-xs btn-default" href="index.php?page=dashboard_avanzado_config" title="opciones de dashboard avanzado">
+                           <span class="glyphicon glyphicon-wrench"></span>
+                        </a>
+                     </span>
+                  </div>
+               </div>
+               <div class="box-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center">Tesorería</th>
+                           </tr>
+                        </thead>
+                        {if="$fsc->cajas"}
+                        <tr>
+                           <td class="text-center">CAJAS (570xxx)</td>
+                           <td>
+                              <table class="table table-striped" style="margin: 0px;">
+                                 {loop="$fsc->cajas"}
+                                 <tr>
+                                    <td>{$value->descripcion}</td>
+                                    <td class="text-right">{$fsc->show_precio($value->saldo)}</td>
+                                 </tr>
+                                 {/loop}
+                                 <tr>
+                                    <td>TOTAL CAJAS</td>
+                                    <td class="text-right">{$fsc->show_precio($fsc->da_tesoreria['total_cajas'])}</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        {/if}
+                        {if="$fsc->bancos"}
+                        <tr>
+                           <td class="text-center">BANCOS (572xxx)</td>
+                           <td>
+                              <table class="table table-striped" style="margin: 0px;">
+                                 {loop="$fsc->bancos"}
+                                 <tr>
+                                    <td>{$value->descripcion}</td>
+                                    <td class="text-right">{$fsc->show_precio($value->saldo)}</td>
+                                 </tr>
+                                 {/loop}
+                                 <tr>
+                                    <td>TOTAL BANCOS</td>
+                                    <td class="text-right">{$fsc->show_precio($fsc->da_tesoreria['total_bancos'])}</td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        {/if}
+                        <tr>
+                           <td class="text-center">TOTAL TESORERÍA</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_tesoreria['total_tesoreria'])}</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-6">
+            <div class="box">
+               <div class="box-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center">GASTOS Y COBROS PENDIENTES</th>
+                           </tr>
+                        </thead>
+                        <tr>
+                           <td>(a) Gastos pendientes de pago</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_gastoscobros['gastospdtepago'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(b) Clientes pendientes de cobro</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_gastoscobros['clientespdtecobro'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(c) Nóminas pendientes de pago (465xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_gastoscobros['nominaspdtepago'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(d) Seguridad Social pendiente de pago (476xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_gastoscobros['segsocialpdtepago'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(e) Seguridad Social pendiente de cobro (471xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_gastoscobros['segsocialpdtecobro'])}</td>
+                        </tr>
+                        <tr>
+                           <td>TOTAL GASTOS Y COBROS PENDIENTES</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_gastoscobros['total_gastoscobros'])}</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-6">
+            <div class="box">
+               <div class="box-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center">IMPUESTOS</th>
+                           </tr>
+                        </thead>
+                        <tr>
+                           <td>IRPF (4751xxx) (nóminas + profesionales MOD 111)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['irpf-mod111'])}</td>
+                        </tr>
+                        <tr>
+                           <td>IRPF (4751xxx) (Alquiler oficina MOD 115)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['irpf-mod115'])}</td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                           <td>(a) IVA Repercutido (477xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['iva-repercutido'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(b) IVA Soportado (472xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['iva-soportado'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(c) IVA a devolver trimestres anteriores (470xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['iva-devolver'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Resultado IVA (MOD 303)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['resultado_iva-mod303'])}</td>
+                        </tr>
+                        <tr>
+                           <td colspan="2" class="text-center">EJERCICIO ACTUAL</td>
+                           <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                           <td>Ventas totales</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['ventas_totales'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Gastos totales</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['gastos_totales'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Resultado</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['resultado'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(a) Impuesto sociedades</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['sociedades'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(b) Pagos en periodos anteriores</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['pago-ant'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Pago fraccionado Imp. Sociedades (MOD 202)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['pagofraccionado-mod202'])}</td>
+                        </tr>
+                       <tr>
+                           <td colspan="2" class="text-center">EJERCICIO ANTERIOR</td>
+                           <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                           <td>Resultado (129xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['resultado_ejanterior'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Resultado negativo otros ejercicios (121xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['resultado_negotros'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Total resultado</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['total'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(a) Impuesto sociedades</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['sociedades_ant'])}</td>
+                        </tr>
+                        <tr>
+                           <td>(b) Adelantos impuesto sociedades (4709xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['sociedades_adelantos'])}</td>
+                        </tr>
+                        <tr>
+                           <td>Total a pagar o devolver impuesto sociedades (MOD 200)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_impuestos['total-mod200'])}</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-6">
+            <div class="box">
+               <div class="box-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center">RESULTADOS SITUACIÓN TESORERÍA A CORTO PLAZO</th>
+                           </tr>
+                        </thead>
+                        <tr>
+                           <td>Total (Tesorería + Gastos y cobros + MOD 111 + MOD 115 + MOD 303 + MOD 202 + MOD 200)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadosituacion["total"])}</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="box">
+               <div class="box-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center">RESERVAS + RESULTADOS EJERCICIOS</th>
+                           </tr>
+                        </thead>
+                        <tr>
+                           <td>(a) Reserva legal (112xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_reservasresultados["reservalegal"])}</td>
+                        </tr>
+                        <tr>
+                           <td>(b) Reservas voluntarias (113xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_reservasresultados["reservasvoluntarias"])}</td>
+                        </tr>
+                        <tr>
+                           <td>(c) Resultado ejercicio anterior (129xxx + 121xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_reservasresultados["resultadoejercicioanterior"])}</td>
+                        </tr>
+                        <tr>
+                           <td>TOTAL RESERVAS</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_reservasresultados["total_reservas"])}</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="box">
+               <div class="box-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <thead>
+                           <tr>
+                              <th colspan="2" class="text-center">RESULTADOS EJERCICIO ACTUAL</th>
+                           </tr>
+                        </thead>
+                        <tr>
+                           <td>Total ventas</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["total_ventas"])}</td>
+                        </tr>
+                        <tr>
+                           <td>Total gastos</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["total_gastos"])}</td>
+                        </tr>
+                        <tr>
+                           <td>RESULTADO DE EXPLOTACIÓN</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["resultadoexplotacion"])}</td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                           <td class="text-right"></td>
+                        </tr>
+                        <tr>
+                           <td>Amortizaciones inmovilizado intangible (680xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["amortizacioninmovintang"])}</td>
+                        </tr>
+                        <tr>
+                           <td>Amortizaciones inmovilizado material (681xxx)</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["amortizacioninmovmat"])}</td>
+                        </tr>
+                        <tr>
+                           <td>Total amortizaciones</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["total_amort"])}</td>
+                        </tr>
+                        <tr>
+                           <td>Resultado antes de impuestos RAI</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["resultado_antes_impuestos"])}</td>
+                        </tr>
+                        <tr>
+                           <td>Impuesto sociedades</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["impuesto_sociedades"])}</td>
+                        </tr>
+                        <tr>
+                           <td>Resultado después de impuestos RDI</td>
+                           <td class="text-right">{$fsc->show_precio($fsc->da_resultadoejercicioactual["resultado_despues_impuestos"])}</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<script type="text/javascript" >
+   $('tr td:contains("-")').addClass('gastos');
+</script>
+
+{include="footer"}

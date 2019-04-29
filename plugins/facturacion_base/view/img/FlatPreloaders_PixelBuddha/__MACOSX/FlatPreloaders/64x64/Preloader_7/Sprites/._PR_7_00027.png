@@ -1,0 +1,17 @@
+ubClassId>{00020420-0000-0000-C000-000000000046}</appv:ProxyStubClassId>
+							<appv:TypeLibrary>
+								<appv:TypeLibraryId>{00020813-0000-0000-C000-000000000046}</appv:TypeLibraryId>
+								<appv:VersionNumber>1.9</appv:VersionNumber>
+							</appv:TypeLibrary>
+						</appv:Interface>
+					</appv:Interfaces>
+				</appv:x64>
+				<appv:TypeLibraries>
+					<appv:TypeLibrary>
+						<appv:TypeLibraryId>{00020813-0000-0000-C000-000000000046}</appv:TypeLibraryId>
+						<appv:Versions>
+							<appv:Version>
+								<appv:VersionNumber>1.9</appv:VersionNumber>
+								<appv:Name>Microsoft Excel 16.0 Object Library</appv:Name>
+								<appv:Flags>0</appv:Flags>
+								<appv:HelpDirectory>[{AppVPackageRoot}]\Office16\</app

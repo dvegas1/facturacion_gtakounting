@@ -1,0 +1,198 @@
+<ul id="tabs_catalogo" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+         <a href="#familias" aria-controls="familias" role="tab" data-toggle="tab">
+            <span class="glyphicon glyphicon-folder-open"></span>
+            <span class="hidden-xs">&nbsp; Familias</span>
+         </a>
+      </li>
+      {loop="$fsc->aux_articulos_tabs()"}
+      <li role="presentation">
+         <a href="#articulos{$value}" aria-controls="articulos{$value}" role="tab" data-toggle="tab">
+            {if="$value<=1"} <span class="glyphicon glyphicon-th-large"></span>
+               <span class="hidden-xs">&nbsp; {$value}</span>
+               {else}
+               {$value}
+               {/if}
+         </a>
+      </li>
+      {/loop}
+   </ul>
+   <br />
+   <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="familias">
+         <div class="container-fluid contenedor_productos">
+            <div class="row">
+               {loop="$fsc->familias()"}
+                <div class="contenedor_familia">
+               <div class="col-lg-3 col-md-6 col-sm-6">
+                    
+                  <a href="#" class="thumbnail thumbnail_familia" onclick="return get_articulos('{$value->codfamilia}')">
+                     <img src="{$value->imagen_url()}" alt="{$value->codfamilia}" />
+                     <div class="descrip_familia">{$value->descripcion}</div>
+                  </a>
+                  <br />
+               </div>
+               </div>
+               {/loop}
+            </div>
+         </div>
+      </div>
+      {loop="$fsc->aux_articulos_grid()"}
+   
+   
+      <div role="tabpanel" class="tab-pane" id="articulos{$key}">
+   
+   
+   
+         <div class="container-fluid contenedor_productos">
+            {if="$fsc->articulos_grid=='6x3'"}
+         
+               {loop="$value"}
+               {if="$counter%6==0"}
+          
+ 
+               {/if}
+         <div class="contenedor_producto">
+               <div class="col-xs-12 col-sm-2">
+   
+                     <div id="widget-info">
+
+                           <small class="smallreferencia"><b class="b_value_referencia">{$value->referencia}</b></small>
+                        
+                        </div>
+                        
+                  <script>
+ $(document).ready(function () {
+
+$('[data-toggle="popover"]').popover({
+    placement: 'bottom',
+    trigger: 'hover',
+    content: function () {
+      
+
+
+     return $("#ref1_"+$(this).attr('id')).html();
+   
+    }
+});
+});
+                  </script>
+
+                  <a href="#" class="thumbnail getarticulo sthumbnail_min cajas_producto" onclick="{$value->funcion_js}">
+   
+   
+   
+                        {if="$value->imagen_url()==''"}
+                        <img  aria-hidden='true' data-toggle='popover' data-toggle='popover' data-html='true'  id="{$counter}"  src="{#FS_PATH#}plugins/tpv_tactil/view/img/product.png"alt="{$value->referencia}" />
+                        {else}
+                        <img   aria-hidden='true' data-toggle='popover' data-toggle='popover' data-html='true'  id="{$counter}" src="{#FS_PATH#}{$value->imagen_url()}" aria-hidden='true' alt="{$value->referencia}" />
+                        {/if}                    
+                                              
+
+      
+                        <span class="badge">{$fsc->show_precio($value->pvp_iva())}</span>
+   
+                        <div id="ref1_{$counter}" class="tum_almacen" >
+                           <div class="titulo">Disp. Almacenes.</div>
+                              {$value->validarStock($value->referencia)}
+                              {loop="$value->totalcantidad"}
+                           
+                              {if="$value['cantidad'] < 1"} <span disabled class="badgenull">
+                                 {$value['nombre']} : {$value['cantidad']}</span>                         
+                                 {else}
+            
+                                 <span disabled class="estadisticas_s">
+                                    {$value['nombre']} : <input class="form-control_pre" id="{$value['descripcion']}_{$value['almacen']}" type="text"
+                                     
+                                       value="{$value['cantidad']}"/></span>
+            
+            
+                             
+                                 {/if}
+            
+                                 {/loop}
+         
+                              </div>
+
+
+                        <!--{loop="$value->totalcantidad"}
+                    <span class="badge">  {$value['nombre']} : {$value['cantidad']}</span>
+                    {/loop}-->
+   
+                  </a>
+               </div>
+</div>
+               {else}
+               <div class="col-sm-12">
+                  <div class="alert alert-warning">Sin resultados.</div>
+               </div>
+               {/loop}
+   
+   
+   
+   
+   
+           
+            {elseif="$fsc->articulos_grid=='4x3'"}
+            <div class="row">
+               {loop="$value"}
+               {if="$counter%4==0"}
+            </div>
+            <div class="row">
+               {/if}
+               <div class="col-sm-3">
+                  <a href="#" class="thumbnail" onclick="{$value->funcion_js}">
+                     {if="$value->imagen_url()==''"}
+                     <img src="{#FS_PATH#}plugins/tpv_tactil/view/img/product.png" alt="{$value->referencia}" />
+                     {else}
+                     <img src="{#FS_PATH#}{$value->imagen_url()}" alt="{$value->referencia}" />
+                     {/if}
+                     <small><b>{$value->referencia}</b>: {$value->descripcion(60)}</small>
+                     <span class="badge">{$fsc->show_precio($value->pvp_iva())}</span>
+                  </a>
+               </div>
+               {else}
+               <div class="col-sm-12">
+                  <div class="alert alert-warning">Sin resultados.</div>
+               </div>
+               {/loop}
+            </div>
+            {elseif="$fsc->articulos_grid=='3x3'"}
+            <div class="row">
+               {loop="$value"}
+               {if="$counter%3==0"}
+            </div>
+            <div class="row">
+               {/if}
+              <div class="contenedor_producto">
+               <div class="col-lg-3 col-md-6 col-sm-6">
+
+
+                  <a href="#" class="thumbnail thumbnail_productos" onclick="{$value->funcion_js}">
+                     {if="$value->imagen_url()==''"}
+                     <img src="{#FS_PATH#}plugins/tpv_tactil/view/img/product.png" alt="{$value->referencia}" />
+                     {else}
+                     <img src="{#FS_PATH#}{$value->imagen_url()}" alt="{$value->referencia}" />
+                     {/if}
+                     
+                     <span class="badge">{$fsc->show_precio($value->pvp_iva())}</span>
+                  </a>
+               </div>
+                </div>
+               {else}
+               <div class="col-sm-12">
+                  <div class="alert alert-warning">Sin resultados.</div>
+               </div>
+               {/loop}
+            </div>
+            {else}
+            <div class="row">
+               <div class="col-sm-12">
+                  <div class="alert alert-warning">Algo Salio mal.</div>
+               </div>
+            </div>
+            {/if}
+         </div>
+      </div>
+      {/loop}
+   </div>

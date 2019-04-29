@@ -1,0 +1,28 @@
+{include="header2"}
+
+{if="$fsc->familia"}
+<br/>
+
+<form action="{$fsc->url()}" method="post" enctype="multipart/form-data" class="form">
+   <input type="hidden" name="imagen" value="TRUE"/>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-6">
+            <div class="form-group">
+               <input name="fimagen" type="file" accept="image/jpeg, image/png"/>
+            </div>
+            <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+               <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Guardar
+            </button>
+         </div>
+         <div class="col-sm-6">
+            <div class="thumbnail">
+               <img src="{$fsc->familia->imagen_url()}" alt="{$fsc->familia->codfamilia}"/>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+{/if}
+
+{include="footer2"}

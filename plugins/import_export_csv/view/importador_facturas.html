@@ -1,0 +1,146 @@
+{include="header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="btn-group">
+            <a class="btn btn-sm btn-default" href="index.php?page=ie_csv_home">
+               <span class="glyphicon glyphicon-arrow-left"></span>
+               <span class="hidden-xs">&nbsp; Importar/exportar CSV</span>
+            </a>
+            <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+               <span class="glyphicon glyphicon-refresh"></span>
+            </a>
+         </div>
+         <div class="page-header">
+            <h1>
+               <span class="glyphicon glyphicon-import"></span> Importador de facturas
+            </h1>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-6 col-lg-4">
+         <div class="panel panel-warning">
+            <div class="panel-heading">
+               <h3 class="panel-title">Facturas de compra</h3>
+            </div>
+            <div class="panel-body">
+               <p class="help-block">
+                  <b>Columnas del archivo facturas.csv:</b>
+                  <br/>
+                  idfactura, idproveedor, nif, nombreproveedor, numproveedor, fecha,
+                  vencimiento, neto, totaliva, total, pagada
+                  <br/>
+                  Pagada = 0/1
+                  <br/>
+                  <br/>
+                  <b>Columnas del archivo lineas.csv:</b>
+                  <br/>
+                  idfactura, referencia, descripcion, cantidad, pvp, dto, iva
+               </p>
+               <form enctype="multipart/form-data" action="{$fsc->url()}" method="post">
+                  <input type="hidden" name="contiene" value="compras"/>
+                  <div class="form-group">
+                     Facturas:
+                     <input name="ffacturas" type="file" accept=".csv"/>
+                  </div>
+                  <div class="form-group">
+                     Lineas:
+                     <input name="flineas" type="file" accept=".csv"/>
+                  </div>
+                  <div class="form-group">
+                     Separador de columnas:
+                     <input type="text" name="separador" value="{$fsc->separador}" class="form-control" maxlength="1" autocomplete="off"/>
+                  </div>
+                  <div class="form-group">
+                     <a href="{$fsc->serie->url()}">Serie</a>:
+                     <select name="codserie" class="form-control">
+                        {loop="$fsc->serie->all()"}
+                        <option value="{$value->codserie}">{$value->descripcion}</option>
+                        {/loop}
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <a href="{$fsc->almacen->url()}">Almacén</a>:
+                     <select name="codalmacen" class="form-control">
+                        {loop="$fsc->almacen->all()"}
+                        <option value="{$value->codalmacen}">{$value->nombre}</option>
+                        {/loop}
+                     </select>
+                  </div>
+                  <button class="btn btn-sm btn-warning" type="submit" onclick="this.disabled=true;this.form.submit();">
+                     <span class="glyphicon glyphicon-import"></span>&nbsp; Procesar
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+         <div class="panel panel-warning">
+            <div class="panel-heading">
+               <h3 class="panel-title">Facturas de venta</h3>
+            </div>
+            <div class="panel-body">
+               <p class="help-block">
+                  <b>Columnas del archivo facturas.csv:</b>
+                  <br/>
+                  idfactura, idcliente, nif, nombrecliente, numero2, direccion, codpostal, ciudad,
+                  provincia, codpais, fecha, vencimiento, neto, totaliva, total, pagada
+                  <br/>
+                  Pagada = 0/1
+                  <br/>
+                  <br/>
+                  <b>Columnas del archivo lineas.csv:</b>
+                  <br/>
+                  idfactura, referencia, descripcion, cantidad, pvp, dto, iva
+               </p>
+               <form enctype="multipart/form-data" action="{$fsc->url()}" method="post">
+                  <input type="hidden" name="contiene" value="ventas"/>
+                  <div class="form-group">
+                     Facturas:
+                     <input name="ffacturas" type="file" accept=".csv"/>
+                  </div>
+                  <div class="form-group">
+                     Lineas:
+                     <input name="flineas" type="file" accept=".csv"/>
+                  </div>
+                  <div class="form-group">
+                     Separador de columnas:
+                     <input type="text" name="separador" value="{$fsc->separador}" class="form-control" maxlength="1" autocomplete="off"/>
+                  </div>
+                  <div class="form-group">
+                     <a href="{$fsc->serie->url()}">Serie</a>:
+                     <select name="codserie" class="form-control">
+                        {loop="$fsc->serie->all()"}
+                        <option value="{$value->codserie}">{$value->descripcion}</option>
+                        {/loop}
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <a href="{$fsc->almacen->url()}">Almacén</a>:
+                     <select name="codalmacen" class="form-control">
+                        {loop="$fsc->almacen->all()"}
+                        <option value="{$value->codalmacen}">{$value->nombre}</option>
+                        {/loop}
+                     </select>
+                  </div>
+                  <button class="btn btn-sm btn-warning" type="submit" onclick="this.disabled=true;this.form.submit();">
+                     <span class="glyphicon glyphicon-import"></span>&nbsp; Procesar
+                  </button>
+               </form>
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-12 col-lg-4">
+         <h2>
+            <span class="glyphicon glyphicon-question-sign"></span> Asientos
+         </h2>
+         <p class="help-block">
+            Puedes generar los asientos que falten con el plugin <b>megafacturador</b>.
+         </p>
+      </div>
+   </div>
+</div>
+
+{include="footer"}

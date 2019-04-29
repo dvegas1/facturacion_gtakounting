@@ -1,0 +1,28 @@
+{include="header"}
+
+{if="$fsc->url_recarga!=''"}
+<script type="text/javascript">
+   $(document).ready(function() {
+      setTimeout(function(){ window.location.href = '{$fsc->url_recarga}'; }, 2000);
+   });
+</script>
+{/if}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="page-header">
+            <h1>Importador SAGE</h1>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-6">
+         <a href="{$fsc->url()}&opcion=clientes" class="btn btn-sm btn-block btn-default">
+            Importar clientes y proveedores
+         </a>
+      </div>
+   </div>
+</div>
+
+{include="footer"}

@@ -1,0 +1,50 @@
+         <br/>
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-12">
+                  {if="FS_DB_HISTORY"}
+                     <div class="panel panel-default hidden-print">
+                        <div class="panel-heading">
+                           <h3 class="panel-title">Consultas SQL:</h3>
+                        </div>
+                        <div class="panel-body">
+                           <ol style="font-size: 11px; margin: 0px; padding: 0px 0px 0px 20px;">
+                              {loop="$fsc->get_db_history()"}<li>{$value}</li>{/loop}
+                           </ol>
+                        </div>
+                     </div>
+                     {loop="$fsc->extensions"}
+                        {if="$value->type=='hidden_iframe'"}
+                        <iframe src="index.php?page={$value->from}{$value->params}" width="100%"></iframe>
+                        {/if}
+                     {/loop}
+                  {else}
+                     <div class="hidden">
+                        {loop="$fsc->extensions"}
+                           {if="$value->type=='hidden_iframe'"}
+                           <iframe src="index.php?page={$value->from}{$value->params}"></iframe>
+                           {/if}
+                        {/loop}
+                     </div>
+                  {/if}
+               </div>
+            </div>
+         </div>
+      </div>
+      <footer class="main-footer hidden-print">
+         <div class="pull-right hidden-xs">
+            <b>Version</b> {$fsc->version()}
+         </div>
+         Copyrigth  <a target="_blank" href="//www.solessa.org">Akounting</a> &nbsp;
+         <span class="label label-default">Consultas: {$fsc->selects()}</span>
+         <span class="label label-default">Transacciones: {$fsc->transactions()}</span>
+         <span class="label label-default">
+            <span class="glyphicon glyphicon-time" aria-hidden="true" title="Página procesada en {$fsc->duration()}"></span>
+            &nbsp; {$fsc->duration()}
+         </span>
+      </footer>
+      <aside class="control-sidebar control-sidebar-dark"></aside>
+      <div class="control-sidebar-bg"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,402 @@
+{include="header"}
+
+{if="$fsc->pedido"}
+<script type="text/javascript" src="{$fsc->get_js_location('ac_email_proveedor.js')}"></script>
+<script type="text/javascript" src="{$fsc->get_js_location('nueva_compra.js')}"></script>
+<!--{$lineas=$fsc->pedido->get_lineas()}-->
+{if="$fsc->pedido->editable"}
+<script type="text/javascript">
+   numlineas = {function="count($lineas)"};
+   fs_nf0 = {#FS_NF0#};
+   fs_nf0_art = {#FS_NF0_ART#};
+   all_impuestos = {function="json_encode($fsc->impuesto->all())"};
+   default_impuesto = '{$fsc->default_items->codimpuesto()}';
+   all_series = {function="json_encode($fsc->serie->all())"};
+   proveedor = {function="json_encode($fsc->proveedor_s)"};
+   nueva_compra_url = '{$fsc->nuevo_pedido_url}';
+   precio_compra = '{#FS_PRECIO_COMPRA#}';
+   
+   {if="$fsc->empresa->recequivalencia"}
+   tiene_recargo = true;
+   {/if}
+   
+   function cambiar_proveedor() {
+      $("#p_cambiar_proveedor").removeClass('hidden');
+      document.f_pedido.ac_proveedor.readOnly = false;
+      document.f_pedido.ac_proveedor.value = '';
+      document.f_pedido.ac_proveedor.focus();
+   }
+   $(document).ready(function() {
+      $('#numlineas').val(numlineas);
+      usar_serie();
+      usar_almacen();
+      usar_divisa();
+      recalcular();
+      $('#ac_proveedor').autocomplete({
+         serviceUrl: nueva_compra_url,
+         paramName: 'buscar_proveedor',
+         onSelect: function(suggestion) {
+            if(suggestion) {
+               if(document.f_pedido.proveedor.value != suggestion.data && suggestion.data != '') {
+                  document.f_pedido.proveedor.value = suggestion.data;
+                  usar_proveedor(suggestion.data);
+               }
+            }
+         }
+      });
+   });
+</script>
+{/if}
+<script type="text/javascript">
+   $(document).ready(function () {
+      $('#b_imprimir').click(function (event) {
+         event.preventDefault();
+         $('#modal_imprimir_pedido').modal('show');
+      });
+      $('#b_enviar').click(function (event) {
+         event.preventDefault();
+         $('#modal_enviar').modal('show');
+         document.f_enviar_email.email.select();
+      });
+      $("#b_aprobar").click(function(event) {
+         event.preventDefault();
+         $("#modal_aprobar").modal('show');
+      });
+      $('#b_eliminar').click(function (event) {
+         event.preventDefault();
+         $('#modal_eliminar').modal('show');
+      });
+
+      {if="$fsc->pedido->totalrecargo==0"}
+      $('.recargo').hide();
+      {/if}
+      {if="$fsc->pedido->totalirpf==0"}
+      $('.irpf').hide();
+      {/if}
+   });
+</script>
+
+<form name="f_pedido" action="{$fsc->pedido->url()}" method="post" class="form">
+   <input type="hidden" name="idpedido" value="{$fsc->pedido->idpedido}"/>
+   <input type="hidden" name="proveedor" value="{$fsc->pedido->codproveedor}"/>
+   <input type="hidden" id="numlineas" name="numlineas" value="0"/>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-xs-8">
+            <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+               <span class="glyphicon glyphicon-refresh"></span>
+            </a>
+            <div class="btn-group">
+               <a id="b_imprimir" class="btn btn-sm btn-default" href="#">
+                  <span class="glyphicon glyphicon-print"></span>
+                  <span class="hidden-xs">&nbsp;Imprimir</span>
+               </a>
+               <a id="b_enviar" class="btn btn-sm btn-default" href="#">
+                  <span class="glyphicon glyphicon-envelope"></span>
+                  <span class="hidden-xs">&nbsp;Enviar</span>
+               </a>
+               {loop="$fsc->extensions"}
+                  {if="$value->type=='button'"}
+                  <a href="index.php?page={$value->from}&id={$fsc->pedido->idpedido}{$value->params}" class="btn btn-sm btn-default">{$value->text}</a>
+                  {elseif="$value->type=='modal'"}
+                  <!--{$txt=base64_encode($value->text)}-->
+                  <!--{$url='index.php?page='.$value->from.'&id='.$fsc->pedido->idpedido.$value->params}-->
+                  <a href="#" class="btn btn-sm btn-default" onclick="fs_modal('{$txt}','{$url}')">{$value->text}</a>
+                  {/if}
+               {/loop}
+            </div>
+            <div class="btn-group">
+               {if="$fsc->pedido->idalbaran"}
+               <a class="btn btn-sm btn-info text-capitalize" href="{$fsc->pedido->albaran_url()}">
+                  <span class="glyphicon glyphicon-eye-open"></span>&nbsp; Ver {#FS_ALBARAN#}
+               </a>
+               {elseif="$fsc->pedido->editable"}
+               <button type="button" class="btn btn-sm btn-warning dropdown-toggle" data-toggle="dropdown">
+                  <span class="glyphicon glyphicon-time"></span>
+                  <span class="hidden-xs">&nbsp; Pendiente</span>
+                  <span class="caret"></span>
+               </button>
+               <ul class="dropdown-menu" role="menu">
+                  <li>
+                     <a id="b_aprobar" href="#">
+                        <span class="glyphicon glyphicon-ok"></span>&nbsp; Aprobado
+                     </a>
+                  </li>
+                  {if="$fsc->user->have_access_to('compras_agrupar_pedidos')"}
+                  <li>
+                     <a href="index.php?page=compras_agrupar_pedidos&codproveedor={$fsc->pedido->codproveedor}&codserie={$fsc->pedido->codserie}&desde={$fsc->pedido->fecha}&coddivisa={$fsc->pedido->coddivisa}">
+                        <span class="glyphicon glyphicon-duplicate"></span>&nbsp; Agrupar...
+                     </a>
+                  </li>
+                  {/if}
+               </ul>
+               {else}
+               <a class="btn btn-sm btn-warning" href="{$fsc->pedido->url()}&desbloquear=TRUE">
+                  <span class="glyphicon glyphicon-lock"></span>&nbsp; Desbloquear
+               </a>
+               {/if}
+            </div>
+         </div>
+         <div class="col-xs-4 text-right">
+            <div class="btn-group">
+               <a class="btn btn-sm btn-success" href="index.php?page=nueva_compra&tipo=pedido" title="Nuevo {#FS_PEDIDO#}">
+                  <span class="glyphicon glyphicon-plus"></span>
+               </a>
+               <a class="btn btn-sm btn-default" href="#" title="Versiones del {#FS_PEDIDO#}" data-toggle="modal" data-target="#modal_versionesp">
+                  <i class="fa fa-retweet" aria-hidden="true"></i>
+                  {if="$fsc->versiones"}
+                  <span class="hidden-xs">{function="count($fsc->versiones)"}</span>
+                  {/if}
+               </a>
+            </div>
+            <div class="btn-group">
+               {if="$fsc->allow_delete"}
+               <a id="b_eliminar" class="btn btn-sm btn-danger" href="#">
+                  <span class="glyphicon glyphicon-trash"></span>
+               </a>
+               {/if}
+               <button class="btn btn-sm btn-primary" type="button" onclick="this.disabled = true;this.form.submit();">
+                  <span class="glyphicon glyphicon-floppy-disk"></span>
+                  <span class="hidden-xs">&nbsp;Guardar</span>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <br/>
+            <ol class="breadcrumb" style="margin-bottom: 5px;">
+               <li><a href="{$fsc->ppage->url()}">Compras</a></li>
+               <li><a href="{$fsc->ppage->url()}" class="text-capitalize">{#FS_PEDIDOS#}</a></li>
+               <li><a href="#" title="almacén: {$fsc->pedido->codalmacen}">{$fsc->pedido->codalmacen}</a></li>
+               <li title="{#FS_SERIE#}: {$fsc->pedido->codserie}">
+                  {loop="$fsc->serie->all()"}
+                     {if="$value->codserie==$fsc->pedido->codserie"}
+                     <a href="#" class="text-capitalize">{$value->descripcion}</a>
+                     {/if}
+                  {/loop}
+               </li>
+               <li title="proveedor: {$fsc->pedido->codproveedor}">
+                  {if="$fsc->proveedor_s"}
+                     <a href="{$fsc->proveedor_s->url()}">{$fsc->pedido->nombre}</a>
+                  {else}
+                     ???
+                  {/if}
+               </li>
+               {if="$fsc->proveedor_s"}
+                  {if="$fsc->proveedor_s->nombre!=$fsc->pedido->nombre"}
+                  <li>
+                     <a href="#" onclick="bootbox.alert({message: 'Proveedor conocido como: {$fsc->proveedor_s->nombre}',title: '<b>Atención</b>'});">
+                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                     </a>
+                  </li>
+                  {/if}
+               {/if}
+               <li class="active"><b>{$fsc->pedido->codigo}</b></li>
+            </ol>
+            <p class="help-block">
+               {if="$fsc->agente"}
+               <span class="text-capitalize">{#FS_PEDIDO#}</span> creado por
+               <a href="{$fsc->agente->url()}">{$fsc->agente->get_fullname()}</a>.
+               {else}
+               Sin datos de qué empleado ha creado este {#FS_PEDIDO#}.
+               {/if}
+            </p>
+         </div>
+      </div>
+      <div class="row">
+         {if="$fsc->pedido->editable"}
+         <div class="col-md-3 col-sm-12">
+            <div class='form-group{if="!$fsc->proveedor_s"} has-warning{/if}'>
+               Proveedor actual:
+               <div class="input-group">
+                  <input class="form-control" type="text" name="ac_proveedor" id="ac_proveedor" value="{$fsc->pedido->nombre}" placeholder="Buscar" readonly="" autocomplete="off"/>
+                  <span class="input-group-btn" title="Cambiar proveedor">
+                     <button class="btn btn-default" type="button" onclick="cambiar_proveedor()">
+                        <span class="glyphicon glyphicon-edit"></span>
+                     </button>
+                  </span>
+               </div>
+               <p id="p_cambiar_proveedor" class="help-block hidden">
+                  Para cambiar el nombre o el {#FS_CIFNIF#}, pero no el proveedor, ve a la pestaña detalles.
+               </p>
+            </div>
+         </div>
+         {/if}
+         <div class="col-md-3 col-sm-4">
+            <div class="form-group">
+               Núm. Proveedor:
+               <input class="form-control" type="text" name="numproveedor" value="{$fsc->pedido->numproveedor}"/>
+            </div>
+         </div>
+         <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+               <a href="{$fsc->serie->url()}" class="text-capitalize">{#FS_SERIE#}</a>:
+               {if="$fsc->pedido->editable"}
+               <select class="form-control" name="serie" id="codserie" onchange="usar_serie();recalcular();">
+               {loop="$fsc->serie->all()"}
+                  {if="$value->codserie==$fsc->pedido->codserie"}
+                  <option value="{$value->codserie}" selected="">{$value->descripcion}</option>
+                  {else}
+                  <option value="{$value->codserie}">{$value->descripcion}</option>
+                  {/if}
+               {/loop}
+               </select>
+               {else}
+               <select class="form-control" name="serie" disabled="">
+               {loop="$fsc->serie->all()"}
+                  {if="$value->codserie==$fsc->pedido->codserie"}
+                  <option value="{$value->codserie}" selected="">{$value->descripcion}</option>
+                  {else}
+                  <option value="{$value->codserie}">{$value->descripcion}</option>
+                  {/if}
+               {/loop}
+               </select>
+               {/if}
+            </div>
+         </div>
+         <div class="col-md-2 col-sm-3">
+            <div class="form-group">
+               Fecha:
+               {if="$fsc->pedido->editable"}
+               <input class="form-control datepicker" type="text" name="fecha" value="{$fsc->pedido->fecha}" autocomplete="off"/>
+               {else}
+               <div class="form-control">{$fsc->pedido->fecha}</div>
+               {/if}
+            </div>
+         </div>
+         <div class="col-md-2 col-sm-3">
+            <div class="form-group">
+               Hora:
+               {if="$fsc->pedido->editable"}
+               <input class="form-control" type="text" name="hora" value="{$fsc->pedido->hora}" autocomplete="off"/>
+               {else}
+               <div class="form-control">{$fsc->pedido->hora}</div>
+               {/if}
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active">
+            <a href="#lineas_p" aria-controls="lineas_p" role="tab" data-toggle="tab">
+               <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+               <span class="hidden-xs">&nbsp;Líneas</span>
+               <span class='badge'>{function="count($lineas)"}</span>
+            </a>
+         </li>
+         <li role="presentation">
+            <a href="#detalles" aria-controls="detalles" role="tab" data-toggle="tab">
+               <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+               <span class="hidden-xs">&nbsp;Detalles</span>
+            </a>
+         </li>
+         {loop="$fsc->extensions"}
+            {if="$value->type=='tab'"}
+            <li role="presentation">
+               <a href="#ext_{$value->name}" aria-controls="ext_{$value->name}" role="tab" data-toggle="tab">{$value->text}</a>
+            </li>
+            {/if}
+         {/loop}
+      </ul>
+      <div class="tab-content">
+         <div role="tabpanel" class="tab-pane active" id="lineas_p">
+            {include="block/compras_pedido_lineas"}
+         </div>
+         <div role="tabpanel" class="tab-pane" id="detalles">
+            <div class="container-fluid" style="margin-top: 10px;">
+               {if="!$fsc->pedido->editable"}
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="alert alert-warning">Estos datos ya no pueden ser modificados.</div>
+                     <br/>
+                  </div>
+               </div>
+               {/if}
+               <div class="row">
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Nombre del proveedor:
+                        <input class="form-control" type="text" name="nombre" value="{$fsc->pedido->nombre}" autocomplete="off"/>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        {#FS_CIFNIF#}:
+                        <input class="form-control" type="text" name="cifnif" value="{$fsc->pedido->cifnif}" maxlength="30" autocomplete="off"/>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <a href="{$fsc->forma_pago->url()}">Forma de pago</a>:
+                        <select name="forma_pago" class="form-control">
+                        {loop="$fsc->forma_pago->all()"}
+                           {if="$value->codpago==$fsc->pedido->codpago"}
+                           <option value="{$value->codpago}" selected="">{$value->descripcion}</option>
+                           {else}
+                           <option value="{$value->codpago}">{$value->descripcion}</option>
+                           {/if}
+                        {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <a href="{$fsc->almacen->url()}">Almacén</a>:
+                        <select name="almacen" id="codalmacen" class="form-control">
+                        {loop="$fsc->almacen->all()"}
+                           {if="$value->codalmacen==$fsc->pedido->codalmacen"}
+                           <option value="{$value->codalmacen}" selected="">{$value->nombre}</option>
+                           {else}
+                           <option value="{$value->codalmacen}">{$value->nombre}</option>
+                           {/if}
+                        {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <a href="{$fsc->divisa->url()}">Divisa</a>:
+                        <select name="divisa" id="coddivisa" class="form-control" onchange="usar_divisa()">
+                        {loop="$fsc->divisa->all()"}
+                           {if="$value->coddivisa==$fsc->pedido->coddivisa"}
+                           <option value="{$value->coddivisa}" selected="">{$value->descripcion}</option>
+                           {else}
+                           <option value="{$value->coddivisa}">{$value->descripcion}</option>
+                           {/if}
+                        {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Tasa de conversión (1€ = X)
+                        <input type="text" name="tasaconv" class="form-control" placeholder="{$fsc->pedido->tasaconv}" autocomplete="off"/>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         {loop="$fsc->extensions"}
+            {if="$value->type=='tab'"}
+            <div role="tabpanel" class="tab-pane" id="ext_{$value->name}">
+               <iframe src="index.php?page={$value->from}{$value->params}&id={$fsc->pedido->idpedido}" width="100%" height="2000" frameborder="0"></iframe>
+            </div>
+            {/if}
+         {/loop}
+      </div>
+   </div>
+</form>
+
+{include="block/modal_buscar_articulo_compras"}
+{include="block/compras_pedido_modals"}
+
+{else}
+<div class="thumbnail">
+   <img src="{#FS_PATH#}view/img/fuuu_face.png" alt="fuuuuu"/>
+</div>
+{/if}
+
+{include="footer"}

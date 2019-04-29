@@ -1,0 +1,1239 @@
+{include="header"}
+
+{if="$fsc->url_recarga!=''"}
+<script type="text/javascript">
+   $(document).ready(function() {
+      setTimeout(function(){ window.location.href = '{$fsc->url_recarga}'; }, 1000);
+   });
+</script>
+{elseif="$fsc->fuente_csv"}
+<script type="text/javascript">
+   function eliminar_fuente()
+   {
+      bootbox.confirm({
+         message: '¿Realmente desea eliminar esta fuente?',
+         title: '<b>Atención</b>',
+         callback: function(result) {
+            if (result) {
+               window.location.href = '{$fsc->url()}&delete={$fsc->fuente_csv->id}';
+            }
+         }
+      });
+   }
+   function check_protocolo_csv()
+   {
+      if(document.f_editar_fuente.csv_protocolo.value == 'file')
+      {
+         $(".ftp").hide();
+         $("#csv_url").hide();
+         $(".csv_file").show();
+      }
+      else
+      {
+         $(".ftp").show();
+         $("#csv_url").show();
+         $(".csv_file").hide();
+      }
+   }
+   $(document).ready(function() {
+      check_protocolo_csv();
+      $("#f_editar_fuente").change(function() {
+         $("#msg_guardar").removeClass('hidden');
+      });
+   });
+</script>
+
+<form id="f_editar_fuente" name="f_editar_fuente" action="{$fsc->fuente_csv->url()}" method="post" enctype="multipart/form-data" class="form">
+   <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+      <div class="row">
+         <div class="col-xs-6">
+            <div class="btn-group">
+               <a class="btn btn-sm btn-default" href="{$fsc->url()}">
+                  <span class="glyphicon glyphicon-arrow-left"></span>
+                  <span class="hidden-xs">&nbsp; Fuentes</span>
+               </a>
+               <a class="btn btn-sm btn-default" href="{$fsc->fuente_csv->url()}" title="Recargar la página">
+                  <span class="glyphicon glyphicon-refresh"></span>
+               </a>
+            </div>
+            {if="count($fsc->col_disponibles)>1"}
+            <a href="{$fsc->fuente_csv->url()}&empezar=TRUE" class="btn btn-sm btn-info">
+               <span class="glyphicon glyphicon-play"></span>
+               <span class="hidden-xs">&nbsp;Procesar</span>
+            </a>
+            {/if}
+         </div>
+         <div class="col-xs-6 text-right">
+            <div class="btn-group">
+               <a href="#" class="btn btn-sm btn-danger" onclick="eliminar_fuente()">
+                  <span class="glyphicon glyphicon-trash"></span>
+                  <span class="hidden-xs hidden-sm">&nbsp;Eliminar</span>
+               </a>
+               <button class="btn btn-sm btn-primary" type="submit">
+                  <span class="glyphicon glyphicon-floppy-disk"></span>
+                  <span class="hidden-xs">&nbsp;Guardar</span>
+               </button>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <div id="msg_guardar" class="alert alert-warning hidden">
+               No olvides guardar los cambios. Pulsa el botón <b>Guardar</b>.
+            </div>
+         </div>
+      </div>
+   </div>
+   <div role="tabpanel">
+      <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation" class="active">
+            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+               <span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>&nbsp; Fuente
+            </a>
+         </li>
+         <li role="presentation">
+            <a href="#columnas" aria-controls="columnas" role="tab" data-toggle="tab">
+               <span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp; Columnas
+            </a>
+         </li>
+         {if="$fsc->prestashop"}
+         <li role="presentation">
+            <a href="#prestashop" aria-controls="prestashop" role="tab" data-toggle="tab">
+               <span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp; PrestaShop
+            </a>
+         </li>
+         {/if}
+      </ul>
+      <div class="tab-content">
+         <div role="tabpanel" class="tab-pane active" id="home">
+            <div class="container-fluid" style="margin-top: 10px;">
+               <div class="row">
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Protocolo:
+                        <select name="csv_protocolo" class="form-control" onchange="check_protocolo_csv()">
+                           <option value="http"{if="$fsc->fuente_csv->protocolo=='http'"} selected=""{/if}>http://</option>
+                           <option value="https"{if="$fsc->fuente_csv->protocolo=='https'"} selected=""{/if}>https://</option>
+                           <option value="ftp"{if="$fsc->fuente_csv->protocolo=='ftp'"} selected=""{/if}>ftp://</option>
+                           <option value="file"{if="$fsc->fuente_csv->protocolo=='file'"} selected=""{/if}>file://</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-6">
+                     <div class="form-group">
+                        URL:
+                        <input type="text" name="csv_url" value="{$fsc->fuente_csv->url}" class="form-control" autocomplete="off"/>
+                        {if="$fsc->fuente_csv->protocolo=='file'"}
+                        <input name="csv_file" type="file" accept=".csv" onchange="this.form.submit()"/>
+                        {/if}
+                        <p class="help-block">
+                           Si quieres cargar otro archivo, seleccionalo aquí.
+                           Este servidor admite un tamaño <b>máximo de {$fsc->get_max_file_upload()} MB</b>.
+                           Si el plugin ocupa más, dará error al subirlo, incluso puede que no salga
+                           nada.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group ftp">
+                        Usuario:
+                        <input type="text" name="csv_user" value="{$fsc->fuente_csv->usuario}" class="form-control" placeholder="opcional" autocomplete="off"/>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group ftp">
+                        Contraseña:
+                        <input type="password" name="csv_pass" value="{$fsc->fuente_csv->password}" class="form-control" placeholder="opcional"/>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Separador:
+                        <select name="csv_separador" class="form-control" onchange="this.form.submit()">
+                        {loop="$fsc->separadores()"}
+                            {if="$value==$fsc->fuente_csv->separador"}
+                            <option value="{$value}" selected="">{$value}</option>
+                            {else}
+                            <option value="{$value}">{$value}</option>
+                            {/if}
+                        {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Codificación:
+                        <select name="csv_codificacion" class="form-control" onchange="this.form.submit()">
+                        {loop="$fsc->codificaciones()"}
+                            {if="$key==$fsc->fuente_csv->codificacion"}
+                            <option value="{$key}" selected="">{$value}</option>
+                            {else}
+                            <option value="{$key}">{$value}</option>
+                            {/if}
+                        {/loop}
+                        </select>
+                        <p class="help-block">
+                           ¿Ves caracteres extraños o faltan acentos? Modifica la codificación.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        <label>
+                           <input type="checkbox" name="cron" value="TRUE"{if="$fsc->fuente_csv->cron"} checked=""{/if}/>
+                           Procesar con el cron.
+                        </label>
+                        <input type="text" name="cron_hour" value="{$fsc->fuente_csv->cron_hour}" class="form-control" placeholder="hora (opcional)" autocomplete="off"/>
+                        <p class="help-block">Puedes escribir a qué hora quieres que se ejecute.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-5">
+                     <div class="well well-sm">
+                        Deseo usar los datos de esta fuente para...
+                        <div class="radio">
+                           <label>
+                              <input type="radio" name="perfil" value="1"{if="$fsc->fuente_csv->perfil==1"} checked=""{/if} onchange="this.form.submit()"/>
+                              Añadir artículos a <b>mi catálogo</b> y actualizar los que ya tengo.
+                           </label>
+                        </div>
+                        <div class="radio">
+                           <label>
+                              <input type="radio" name="perfil" value="2"{if="$fsc->fuente_csv->perfil==2"} checked=""{/if} onchange="this.form.submit()"/>
+                              Solamente actualizar los artículos de <b>mi catálogo</b>: no se añadirán artículos nuevos.
+                           </label>
+                        </div>
+                        <div class="radio">
+                           <label>
+                              <input type="radio" name="perfil" value="3"{if="$fsc->fuente_csv->perfil==3"} checked=""{/if} onchange="this.form.submit()"/>
+                              Actualizar el <b>catálogo del proveedor</b>, accesible desde <mark>Compras &gt; Artículos</mark>.
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <a href="{$fsc->impuesto->url()}">{#FS_IVA#}</a>:
+                        <select class="form-control" name="codimpuesto">
+                        {loop="$fsc->impuesto->all()"}
+                           {if="$value->codimpuesto==$fsc->fuente_csv->codimpuesto"}
+                           <option value="{$value->codimpuesto}" selected="">{$value->descripcion}</option>
+                           {else}
+                           <option value="{$value->codimpuesto}">{$value->descripcion}</option>
+                           {/if}
+                        {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <a href="{$fsc->almacen->url()}">Almacén</a>:
+                        <select name="codalmacen" class="form-control">
+                        {loop="$fsc->almacen->all()"}
+                           {if="$fsc->fuente_csv->codalmacen==$value->codalmacen"}
+                           <option value="{$value->codalmacen}" selected="">{$value->nombre}</option>
+                           {else}
+                           <option value="{$value->codalmacen}">{$value->nombre}</option>
+                           {/if}
+                        {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {if="$fsc->fuente_csv->perfil>=2"}
+                  <div class="col-sm-6">
+                     <div class='form-group{if="!$fsc->fuente_csv->codproveedor"} has-warning{/if}'>
+                        <a href="{$fsc->proveedor->url()}">Proveedor</a>:
+                        <select name="codproveedor" class="form-control" onchange="this.form.submit()">
+                           <option value="">Ninguno</option>
+                           <option value="">------</option>
+                           {loop="$fsc->proveedores"}
+                              {if="$value->codproveedor==$fsc->fuente_csv->codproveedor"}
+                              <option value="{$value->codproveedor}" selected="">{$value->nombre}</option>
+                              {else}
+                              <option value="{$value->codproveedor}">{$value->nombre}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">
+                           También puedes usar la columna proveedor del archivo.
+                        </p>
+                     </div>
+                  </div>
+                  {/if}
+               </div>
+            </div>
+         </div>
+         <div role="tabpanel" class="tab-pane" id="columnas">
+            <div class="container-fluid" style="margin-top: 10px;">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <p class="help-block">
+                        A continuación indica <b>los nombres de las columnas</b> del archivo que se corresponden
+                        con referencia, descripción, precio, etc. Recuerda que se muestran columnas distintas en
+                        función de lo que deseas hacer con esta fuente. <b>Y no olvides guardar antes de comprobar.</b>
+                        <br/>
+                        Si las columnas que se muestran no son correctas, puede que hayas
+                        seleccionado un separador equivocado.
+                     </p>
+                  </div>
+               </div>
+               {if="$fsc->fuente_csv->perfil>=2"}
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. ref. proveedor:
+                        <select name="col_ref_prov" class="form-control">
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ref_prov"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">
+                           Si introduces la referencia de proveedor y el proveedor,
+                           actualizará los artículos de tu catálogo que se correspondan
+                           con los de ese proveedor.
+                        </p>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     {if="is_null($fsc->fuente_csv->codproveedor)"}
+                     <div class="form-group">
+                        Columna proveedor:
+                        <select name="col_codproveedor" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_codproveedor"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">
+                           Si el archivo ya contiene una columna con los códigos o nombres de los proveedores,
+                           escribe aquí el nombre de la columna.
+                        </p>
+                     </div>
+                     {/if}
+                  </div>
+               </div>
+               {/if}
+               <div class="row">
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. referencia:
+                        <select name="col_ref" class="form-control">
+                           {if="$fsc->fuente_csv->perfil==3"}
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {/if}
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ref"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Sufijo para las referencias:
+                        <input class="form-control" name="sufijo" type="text" value="{$fsc->fuente_csv->sufijo}" placeholder="(opcional)" autocomplete="off"/>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. descripción:
+                        <select name="col_desc" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_desc"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. fabricante:
+                        <select name="col_fabricante" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_fabricante"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. familia:
+                        <select name="col_familia" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_familia"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. cod. barras:
+                        <select name="col_barras" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_barras"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. equivalencia:
+                        <select name="col_equivalencia" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_equivalencia"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. partnumber:
+                        <select name="col_partnumber" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_partnumber"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. observaciones:
+                        <select name="col_observaciones" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_observaciones"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {if="$fsc->fuente_csv->perfil>=2"}
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. precio compra:
+                        <select name="col_precio_compra" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_precio_compra"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. descuento compra:
+                        <select name="col_dto_compra" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_codproveedor"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {/if}
+                  {if="$fsc->fuente_csv->perfil<3"}
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. precio coste:
+                        <select name="col_precio_coste" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_precio_coste"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {/if}
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. {#FS_IVA#}:
+                        <select name="col_iva" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_iva"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. precio venta:
+                        <select name="col_precio" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_precio"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {if="$fsc->fuente_csv->perfil>=2"}
+                  <div class="col-sm-2">
+                     <div class="checkbox">
+                        <label>
+                           <input type="checkbox" name="compra_con_iva" value="TRUE"{if="$fsc->fuente_csv->compra_con_iva"} checked=""{/if}/>
+                           Los precios de compra ya llevan el {#FS_IVA#}.
+                        </label>
+                     </div>
+                  </div>
+                  {/if}
+                  <div class="col-sm-2">
+                     <div class="checkbox">
+                        <label>
+                           <input type="checkbox" name="con_iva" value="TRUE"{if="$fsc->fuente_csv->con_iva"} checked=""{/if}/>
+                           Los precios de venta ya llevan el {#FS_IVA#}.
+                        </label>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="checkbox">
+                        <label>
+                           <input type="checkbox" name="pvp_max" value="TRUE"{if="$fsc->fuente_csv->pvp_max"} checked=""{/if}/>
+                           Asignar el precio máximo de venta.
+                        </label>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+               {if="$fsc->fuente_csv->perfil<=2 AND class_exists('tarifa_articulo')"}
+                  {loop="$fsc->tarifas"}
+                     {if="$counter<3"}
+                     <div class="col-sm-3">
+                        <div class="form-group">
+                           Col. tarifa <b>{$value->nombre}</b>:
+                           {if="$counter==0"}
+                           <select name="col_precio_tarifa1" class="form-control">
+                              <option value="">(opcional)</option>
+                              <option value="">-------</option>
+                              {loop="$fsc->col_disponibles"}
+                                 {if="$value==$fsc->fuente_csv->col_precio_tarifa1"}
+                                 <option value="{$value}" selected="">{$value}</option>
+                                 {else}
+                                 <option value="{$value}">{$value}</option>
+                                 {/if}
+                              {/loop}
+                           </select>
+                           {elseif="$counter==1"}
+                           <select name="col_precio_tarifa2" class="form-control">
+                              <option value="">(opcional)</option>
+                              <option value="">-------</option>
+                              {loop="$fsc->col_disponibles"}
+                                 {if="$value==$fsc->fuente_csv->col_precio_tarifa2"}
+                                 <option value="{$value}" selected="">{$value}</option>
+                                 {else}
+                                 <option value="{$value}">{$value}</option>
+                                 {/if}
+                              {/loop}
+                           </select>
+                           {elseif="$counter==2"}
+                           <select name="col_precio_tarifa3" class="form-control">
+                              <option value="">(opcional)</option>
+                              <option value="">-------</option>
+                              {loop="$fsc->col_disponibles"}
+                                 {if="$value==$fsc->fuente_csv->col_precio_tarifa3"}
+                                 <option value="{$value}" selected="">{$value}</option>
+                                 {else}
+                                 <option value="{$value}">{$value}</option>
+                                 {/if}
+                              {/loop}
+                           </select>
+                           {/if}
+                        </div>
+                     </div>
+                     {/if}
+                  {/loop}
+               {/if}
+               </div>
+               <div class="row">
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. stock:
+                        <select name="col_stock" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_stock"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {if="$fsc->fuente_csv->perfil<3"}
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. stock mín.:
+                        <select name="col_stockmin" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_stockmin"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. stock máx.:
+                        <select name="col_stockmax" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_stockmax"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  {/if}
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. nostock:
+                        <select name="col_nostock" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_nostock"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">1 = desactiva stock, 0 = no.</p>
+                     </div>
+                  </div>
+                  {if="$fsc->fuente_csv->perfil<3"}
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. permitir venta sin stock:
+                        <select name="col_ventasinstock" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ventasinstock"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">1 = permite la venta sin stock, 0 = no.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. secompra:
+                        <select name="col_secompra" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_secompra"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">1 = si, 0 = no.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. sevende:
+                        <select name="col_sevende" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_sevende"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">1 = si, 0 = no.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. bloqueado:
+                        <select name="col_bloqueado" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_bloqueado"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">1 = si, 0 = no.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. publico:
+                        <select name="col_publico" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_publico"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">1 = si, 0 = no.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. factualizado:
+                        <select name="col_factualizado" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_factualizado"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">Fecha de actualización del precio de venta.</p>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. URL imagen:
+                        <select name="col_url_img" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_url_img"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                        <p class="help-block">URL de la imagen del artículo.</p>
+                     </div>
+                  </div>
+                  {/if}
+               </div>
+            </div>
+         </div>
+         {if="$fsc->prestashop"}
+         <div role="tabpanel" class="tab-pane" id="prestashop">
+             <div class="container-fluid" style="margin-top: 15px;">
+                 {if="$fsc->fuente_csv->perfil==3"}
+                 <div class="row">
+                     <div class="page-header">
+                         <h1>
+                             <span class="glyphicon glyphicon-import"></span>
+                             Compras artículos prestashop
+                             <a class="btn btn-xs btn-default" href="{$fsc->url()}" title="Recargar la página">
+                                 <span class="glyphicon glyphicon-refresh"></span>
+                             </a>
+                         </h1>
+                         <p class="help-block">
+                             Estos datos se almacerán en una tabla auxiliar y sólo valdrán para poder crear nuevos artículos desde articulos_compras.
+                         </p>
+                     </div>
+                 </div>
+                 {/if}
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. descripción corta:
+                        <select name="col_desc_corta" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_desc_corta"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. descripción larga:
+                        <select name="col_desc_larga" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_desc_larga"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. meta-title:
+                        <select name="col_meta_title" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_meta_title"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. meta-description:
+                        <select name="col_meta_descrip" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_meta_descrip"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. meta-keywords:
+                        <select name="col_meta_keys" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_meta_keys"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. precio de:
+                        <select name="col_ps_precio" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_precio"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. precio en oferta:
+                        <select name="col_ps_oferta" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_oferta"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. oferta desde:
+                        <select name="col_ps_oferta_desde" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_oferta_desde"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. oferta hasta:
+                        <select name="col_ps_oferta_hasta" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_oferta_hasta"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. anchura paquete:
+                        <select name="col_ps_anchura" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_anchura"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. altura paquete:
+                        <select name="col_ps_altura" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_altura"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. profundidad paquete:
+                        <select name="col_ps_profundidad" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_profundidad"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. peso paquete:
+                        <select name="col_ps_peso" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_peso"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        Col. gastos envío:
+                        <select name="col_ps_gastos_envio" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_gastos_envio"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. disponibilidad:
+                        <select name="col_ps_txt_no_disponible" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_txt_no_disponible"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. activo:
+                        <select name="col_ps_activo" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_activo"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. redirección:
+                        <select name="col_ps_redireccion" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_redireccion"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. redirección ID:
+                        <select name="col_ps_redireccion_id" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_redireccion_id"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. ID PrestaShop:
+                        <select name="col_id_prestashop" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_id_prestashop"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-3">
+                     <div class="form-group">
+                        Col. ps_factualizado:
+                        <select name="col_ps_factualizado" class="form-control">
+                           <option value="">(opcional)</option>
+                           <option value="">-------</option>
+                           {loop="$fsc->col_disponibles"}
+                              {if="$value==$fsc->fuente_csv->col_ps_factualizado"}
+                              <option value="{$value}" selected="">{$value}</option>
+                              {else}
+                              <option value="{$value}">{$value}</option>
+                              {/if}
+                           {/loop}
+                        </select>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         {/if}
+      </div>
+   </div>
+</form>
+
+<div>
+   <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+         <a href="#contenido" aria-controls="contenido" role="tab" data-toggle="tab">
+            <span class="glyphicon glyphicon-eye-open"></span>&nbsp; Contenido
+         </a>
+      </li>
+      <li role="presentation">
+         <a href="#detectado" aria-controls="detectado" role="tab" data-toggle="tab">
+            <span class="glyphicon glyphicon-search"></span>&nbsp; Detectado
+         </a>
+      </li>
+   </ul>
+   <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="contenido">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               {loop="$fsc->detectar_contenido()"}
+                  {if="$key==0"}
+                  <thead>
+                     <tr>
+                        {loop="$value1"}
+                        <th>{$value2}</th>
+                        {/loop}
+                     </tr>
+                  </thead>
+                  {else}
+                  <tr>
+                     {loop="$value1"}
+                     <td>{$value2}</td>
+                     {/loop}
+                  </tr>
+                  {/if}
+               {/loop}
+            </table>
+         </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="detectado">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               {loop="$fsc->detectado"}
+                  {if="$counter==0"}
+                  <thead>
+                     <tr>
+                        {loop="$value1"}
+                        <th class="text-left">{$key2}</th>
+                        {else}
+                        <th class="text-left">Ninguna columna detectada</th>
+                        {/loop}
+                     </tr>
+                  </thead>
+                  {/if}
+                  <tr>
+                     {loop="$value1"}
+                     <td>{$value2}</td>
+                     {else}
+                     <td class="danger">-</td>
+                     {/loop}
+                  </tr>
+               {/loop}
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+{/if}
+
+{include="footer"}

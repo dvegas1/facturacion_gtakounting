@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : cajas_general_mov.xml
+    Description:
+        Estructura de la tabla cajas_general_mov.
+-->
+<tabla>
+    <columna>
+        <nombre>cajamov_id</nombre>
+        <tipo>serial</tipo>
+        <nulo>NO</nulo>
+        <defecto>nextval('cajas_general_mov_cajamov_id_seq'::regclass)</defecto>
+    </columna>
+    <columna>
+        <nombre>caja_id</nombre>
+        <tipo>integer</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>codagente</nombre>
+        <tipo>varchar(10)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>f_apunte</nombre>
+        <tipo>timestamp without time zone</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>apunte</nombre>
+        <tipo>double precision</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>concepto</nombre>
+        <tipo>text</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>subtotal</nombre>
+        <tipo>double precision</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <columna>
+        <nombre>ip</nombre>
+        <tipo>character varying(40)</tipo>
+        <nulo>YES</nulo>
+    </columna>
+    <restriccion>
+        <nombre>cajas_general_mov_pkey</nombre>
+        <consulta>PRIMARY KEY (cajamov_id)</consulta>
+    </restriccion>
+   <restriccion>
+      <nombre>ca_cajas_agentes5</nombre>
+      <consulta>FOREIGN KEY (codagente)
+      REFERENCES agentes (codagente)
+      ON DELETE RESTRICT ON UPDATE CASCADE</consulta>
+   </restriccion>     
+    <restriccion>
+        <nombre>ca_cajas_general04</nombre>
+        <consulta>FOREIGN KEY (caja_id)
+        REFERENCES cajas_general (id)
+        ON DELETE RESTRICT ON UPDATE CASCADE</consulta>
+    </restriccion>
+</tabla>

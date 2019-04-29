@@ -1,0 +1,83 @@
+{include="header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="page-header">
+            <h1>
+               <span class="glyphicon glyphicon-duplicate"></span>&nbsp;
+               <span class="text-capitalize">{#FS_PEDIDOS#}</span> de compra
+               <small>
+                  creados por <a href="{$fsc->agente->url()}">{$fsc->agente->get_fullname()}</a>
+               </small>
+            </h1>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="table-responsive">
+   <table class="table table-hover">
+      <thead>
+         <tr>
+            <th></th>
+            <th class="text-left text-capitalize">{#FS_PEDIDO#} + Núm. Proveedor</th>
+            <th>Proveedor</th>
+            <th class="hidden-sm"></th>
+            <th class="text-left">Observaciones</th>
+            <th class="text-right">Total</th>
+            <th class="text-right">Fecha</th>
+         </tr>
+      </thead>
+      {loop="$fsc->resultados"}
+      <tr class="clickableRow{if="$value->total<=0"} warning{/if}" href="{$value->url()}">
+         <td class="text-center">
+            {if="$value->idalbaran"}
+            <span class="glyphicon glyphicon-paperclip" title="El {#FS_PEDIDO#} tiene vinculado un {#FS_ALBARAN#}"></span>
+            {/if}
+         </td>
+         <td>
+            <a href="{$value->url()}">{$value->codigo}</a>
+            {$value->numproveedor}
+         </td>
+         <td>{$value->nombre}</td>
+         <td class="text-right hidden-sm">
+            <span title="{$value->numdocs} documentos adjuntos">
+               {if="$value->numdocs==1"}
+               <i class="fa fa-file" aria-hidden="true"></i>
+               {elseif="$value->numdocs>1"}
+               {$value->numdocs} <i class="fa fa-file" aria-hidden="true"></i>
+               {/if}
+            </span>
+         </td>
+         <td>{$value->observaciones_resume()}</td>
+         <td class="text-right">{$fsc->show_precio($value->total, $value->coddivisa)}</td>
+         <td class="text-right">{$value->fecha}</td>
+      </tr>
+      {else}
+      <tr class="warning">
+         <td></td>
+         <td colspan="6">Ningún {#FS_PEDIDO#} encontrado.</td>
+      </tr>
+      {/loop}
+   </table>
+</div>
+
+<ul class="pager">
+   {if="$fsc->anterior_url()!=''"}
+   <li class="previous">
+      <a href="{$fsc->anterior_url()}">
+         <span class="glyphicon glyphicon-chevron-left"></span>&nbsp; Anteriores
+      </a>
+   </li>
+   {/if}
+   {if="$fsc->siguiente_url()!=''"}
+   <li class="next">
+      <a href="{$fsc->siguiente_url()}">
+         Siguientes &nbsp;<span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+   </li>
+   {/if}
+</ul>
+
+{include="footer"}

@@ -1,0 +1,386 @@
+@media print {
+
+    @page {
+
+      margin: 2.5cm;   
+
+    }
+
+    div.row > div {
+
+      display: inline-block;  
+
+      border: solid 1px #ccc;
+
+      margin: 0.2cm;
+
+    }
+
+    div.row {
+
+      display: block;
+
+    }
+	
+	
+	tr.tb_fechayhora {
+    display: inline-block;
+    width: 100%;
+    margin: 0px;
+    padding: 5px;
+}
+
+
+
+
+
+
+.input-group-addon{
+
+  
+  display: none !important;
+}
+
+.eliminarlinea{
+
+  display: none !important;
+
+
+
+}
+
+
+
+.tableimpresion {
+display: none1;
+    width: 80mm;
+    max-width: 80mm;
+    display: table;
+    position: relative;
+    margin: -8px auto;
+}
+
+
+thead {
+
+    display: table-header-group;
+
+    vertical-align: middle;
+
+    border-color: inherit;
+}
+
+
+
+.tabledetalle {
+
+   padding-left:  30px;
+
+    width: 90%;
+
+    max-width: 100%;
+
+
+
+     margin: auto;
+
+        overflow-x: hidden;
+
+
+
+}
+
+
+#templeado{
+
+    text-align: right !important;
+    align-content: right;
+
+
+
+    width: 400px;
+
+display: inline-flex;
+
+font-weight: 100;
+
+
+}
+
+th {text-align:center}
+
+#valuefecha p,#valuemesero p {
+     font-weight: 500;
+
+}
+
+#tfecha {
+    /* text-align: left !important; */
+    font-weight: 500;
+    display: inline-flex;
+    padding: 5px;
+    margin: 2px;
+}
+.tableimpresion_d{
+	margin: 0 auto;
+	text-align: center;
+	font-size: 8pt;
+}
+
+.textresultado{
+	
+	  font-weight: bold;
+
+}
+
+
+#tb_fechayhora,#titulosm_c{
+  text-align: center;
+    align-content: center;
+    align-items: center;
+    display: inline-grid;
+}
+
+
+.tabledetalle{
+
+  margin: auto;
+
+  text-align: center;
+
+
+
+}
+
+
+
+.tabledetalle thead th {
+
+    border-top: none;
+
+    text-align: center;
+
+}
+
+
+
+
+
+#tpv_albaran {
+
+    text-align: center;
+
+}
+
+#monto_impresion,#table_monto_total{
+	
+	    text-align: center !important;
+    align-content: center !important;
+    margin: 30px auto !important;
+	
+	}
+	
+
+#tabledetalle_impre_1 {
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin-bottom: 20px;
+    display: table;
+    margin: 0px;
+    height: 90%;
+    max-height: 90%;
+    padding: 0px;
+}
+
+p#ID_TICKET_IMPRIMIR_VALUE {
+    font-weight: 700;
+        padding-left: 6px !important;
+}
+
+#contenedor_ticketI{
+	display: inline-flex;
+    position: relative;
+}	
+
+
+#tableimpresion {
+}
+
+
+
+.tabledetalle_impre>tbody>tr.warning>td, .tabledetalle_impre>tbody>tr.warning>th, .tabledetalle_impre>tbody>tr>td.warning, .tabledetalle_impre>tbody>tr>th.warning, .tabledetalle_impre>tfoot>tr.warning>td, .tabledetalle_impre>tfoot>tr.warning>th, .tabledetalle>tfoot>tr>td.warning, .tabledetalle>tfoot>tr>th.warning, .tabledetalle>thead>tr.warning>td, .tabledetalle>thead>tr.warning>th, .tabledetalle>thead>tr>td.warning, .tabledetalle>thead>tr>th.warning {
+
+    background-color: #fcf8e3;
+
+    /* border: 1px solid #fff0; */
+
+    border: none;
+
+    text-align: center;
+
+
+
+    text-align: center;
+
+}
+
+
+
+
+
+.tabledetalle_impre>tbody>tr>td, .tabledetalle_impre>tbody>tr>th, .tabledetalle_impre>tfoot>tr>td, .tabledetalle_impre>tfoot>tr>th, .tabledetalle_impre>thead>tr>td, .tabledetalle_impre>thead>tr>th {
+
+    padding: 8px;
+
+    line-height: 1.42857143;
+
+    vertical-align: top;
+
+    border-top: 1px solid #ddd;
+
+    margin: 0;
+
+    text-align: center;
+
+
+
+
+
+}
+
+
+
+.form-control {
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    border-color: #d2d6de;
+
+    border: none;
+
+}
+
+
+
+.tabledetalle>thead>tr>th {
+
+    border-bottom: 2px solid #f4f4f4;
+
+    width: auto;
+
+    max-width: 300px;
+
+    text-align: left !important;
+
+    text-align: center;
+
+    width: 100%;
+
+
+
+}
+
+
+
+.titulosm{
+
+  text-align: left !important;
+
+}
+#ch_impresion{
+  display: none !important;
+}
+
+
+input#impresion_1 {
+  display: none;
+}
+
+th#eliminarlinea {
+display: none;
+}
+.input-group{
+
+
+
+      position: relative;
+
+    display: table;
+
+    border-collapse: separate;
+
+    text-align: left;
+
+
+
+}
+
+
+
+.form-control, .input-group-btn {
+
+    display: table-cell;
+
+    text-align: left;
+
+}
+
+
+.form-control{
+
+    font-size: 9pt !important;
+}
+
+.totalapagar{
+
+   text-align: right !important;
+
+   margin-left: -90px;
+
+
+
+}
+.centrado {
+    text-align: center !important;
+    align-content: center !important;
+    margin: 14px auto !important;
+}
+
+
+
+
+.totalapagar{
+
+
+
+    display: flex;
+
+    padding: 5px;
+
+    margin: 5px;
+
+    text-align: left;
+
+    text-align: right !important;
+
+}
+
+
+
+.trmonto{
+
+    text-align: right;
+
+    display: flex;
+
+    z-index: 1000;
+
+    margin-left: 300px;
+
+    width: 254px;
+
+    background: red;
+
+}

@@ -1,0 +1,597 @@
+
+	body{
+
+		margin-top: 0px !important;
+
+	}
+	.contenedor_cajas_f {
+
+    padding-right: 15px;
+    padding-left: 36px;
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+
+	}
+
+
+
+	#centro{
+	        width: 100%;
+	}
+
+	#tpv_albaran{
+	    text-align: center;
+	}
+
+	#centro{
+	        width: 100%;
+	        padding-right: 220px;
+
+	}
+
+	#lbl_claveS{
+
+	      color: #5373af !important;
+
+	}
+
+	#templeado{
+
+	    text-align: right !important;
+
+
+		display: -webkit-inline-box;
+		    max-width: 8mm;
+
+	}
+	.tableimpresion {
+	    display: none1;
+	    width: 80mm;
+	    max-width: 80mm;
+	    display: table;
+	    position: relative;
+	    margin: 30px auto;
+	}
+	#monto_impresion, #table_monto_total {
+	    text-align: center !important;
+	    align-content: center !important;
+	    margin: 30px auto !important;
+	    max-height: 90%;
+	    height: 90%;
+	}
+
+		#ID_COMANDA{
+
+		background:red;
+
+
+	}
+
+
+
+	#ac_cliente {
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 2px 1px 3px #0000002e;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 9pt !important;
+    font-weight: 500;
+    text-align: center;
+    background: #6c809a;
+    text-shadow: 2px 1px 3px #0000002e;
+    color: white;
+    font-family: 'Lato', sans-serif;
+
+}
+	
+
+	#ID_TICKET_IMPRIMIR{
+		    padding-right: 25px !important;
+		}
+
+	p#ID_TICKET_IMPRIMIR_VALUE {
+	    font-weight: 700;
+	     padding-left: 6px !important;
+	}
+
+	#contenedor_ticketI{
+		display: inline-flex;
+	    position: relative;
+	}
+
+	.bg-info{
+	  display: none !important;
+	}
+
+	#confirmar_2 {
+	    background: #2e8dbb;
+	}
+
+	#contenedor_impresion_botones{
+		display: -webkit-inline-box;
+	    /* border: 1px solid #ccc; */
+	    text-align: center;
+	    /* position: absolute; */
+	    /* margin: 16px 69px auto; */
+	    /* padding: 10px; */
+	    /* margin: 20px; */
+	    padding-bottom: 20px;
+	    margin-bottom: 50px;
+	}
+
+	#tabledetalle_impre_1 {
+		display: none !important;
+	    width: 80mm !important;
+	    max-width: 80mm !important;
+	    margin-bottom: 20px;
+	    display: table;
+	    margin: 0px;
+	    height: 90%;
+	    max-height: 90%;
+	    padding: 0px;
+	}
+
+	.warning_linea_impresion{
+	background: red;
+	}
+
+
+	.navbar-default {
+	    background-color: #f8f8f8;
+	    border-color: #e7e7e7;
+	    display: contents;
+	}
+
+
+
+
+
+
+	td, th {
+	    padding: 3px !important;
+	}
+
+	.btn-default.active, .btn-default:active, .open>.dropdown-toggle.btn-default {
+	    color: #fff0;
+	    background-color: #e2e1d9;
+	    border-color: #d8a8136b;
+	}
+
+	.btn.active, .btn:active {
+	    background-image: none;
+	    outline: 0;
+	    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+	    box-shadow: 0 0 5px rgba(255, 255, 255, 0);
+	}
+
+
+	#ch_impresion{
+
+	}
+
+
+	#confirmar_4 {
+	    /* padding-top: 20px; */
+	    /* text-align: center; */
+	    /* vertical-align: middle; */
+	    /* -webkit-border-vertical-spacing: inherit; */
+	    margin-top: 10px;
+	    margin-bottom: 30px;
+	    background: #1981b7;
+	    border-color: #e8eae9;
+	    padding: 9px;
+	    color: white;
+	    font-size: 11pt;
+	    display: none;
+	    width: 231px;
+	    border-radius: 7px;
+	}
+	#confirmar_3{
+	    /* padding-top: 20px; */
+	    /* text-align: center; */
+	    /* vertical-align: middle; */
+	    /* -webkit-border-vertical-spacing: inherit; */
+	    margin-top: 10px;
+	    margin-bottom: 30px;
+	    background: #c8a100;
+	    border-color: #e8eae9;
+	    padding: 9px;
+	    color: white;
+	    font-size: 11pt;
+	    display: none;
+	    width: 231px;
+	    border-radius: 7px;
+
+	}
+
+	#confirmar_4:hover {
+	   background: #1398df;
+	}
+
+	#confirmar_3:hover {
+	    background: #66a72d;
+	}
+
+	input[type=checkbox]
+	{
+	  /* Doble-tamaño Checkboxes */
+	  -ms-transform: scale(2); /* IE */
+	  -moz-transform: scale(2); /* FF */
+	  -webkit-transform: scale(2); /* Safari y Chrome */
+	  -o-transform: scale(2); /* Opera */
+	  padding: 10px;
+	}
+
+	/* Tal vez desee envolver un espacio alrededor de su texto de casilla de verificación */
+	.checkboxtexto
+	{
+	  /* Checkbox texto */
+	  font-size: 110%;
+	  display: inline;
+	}
+
+
+	.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+	    position: relative !important;
+	    margin-top: 4px\9!important;
+	    margin-left: -16px!important;
+	    margin: 0 1 auto!important;
+	    display: flex!important;
+	    justify-content: center!important;
+	    align-items: center!important;
+	    padding-top: 24px!important;
+	    margin: 12px 2px auto!important;
+	    padding-right: 3px!important;
+	    margin-right: 4px!important;
+	    margin-left: -4px!important;
+	}
+
+
+	/* Customize the label (the container) */
+
+
+	/* Hide the browser's default checkbox */
+
+
+
+	/*! ========================================================================
+	 * Bootstrap Toggle: bootstrap-toggle.css v2.2.0
+	 * http://www.bootstraptoggle.com
+	 * ========================================================================
+	 * Copyright 2014 Min Hur, The New York Times Company
+	 * Licensed under MIT
+	 * ======================================================================== */
+	.checkbox label .toggle,.checkbox-inline .toggle{margin-left:-20px;margin-right:5px}
+	.toggle{position:relative;overflow:hidden}
+	.toggle input[type=checkbox]{display:none}
+	.toggle-group{position:absolute;width:200%;top:0;bottom:0;left:0;transition:left .35s;-webkit-transition:left .35s;-moz-user-select:none;-webkit-user-select:none}
+	.toggle.off .toggle-group{left:-100%}
+	.toggle-on{position:absolute;top:0;bottom:0;left:0;right:50%;margin:0;border:0;border-radius:0}
+	.toggle-off{position:absolute;top:0;bottom:0;left:50%;right:0;margin:0;border:0;border-radius:0}
+	.toggle-handle{position:relative;margin:0 auto;padding-top:0;padding-bottom:0;height:100%;width:0;border-width:0 1px}
+	.toggle.btn{min-width:59px;min-height:34px}
+	.toggle-on.btn{padding-right:24px}
+	.toggle-off.btn{padding-left:24px}
+	.toggle.btn-lg{min-width:79px;min-height:45px}
+	.toggle-on.btn-lg{padding-right:31px}
+	.toggle-off.btn-lg{padding-left:31px}
+	.toggle-handle.btn-lg{width:40px}
+	.toggle.btn-sm{min-width:50px;min-height:30px}
+	.toggle-on.btn-sm{padding-right:20px}
+	.toggle-off.btn-sm{padding-left:20px}
+	.toggle.btn-xs{min-width:35px;min-height:22px}
+	.toggle-on.btn-xs{padding-right:12px}
+	.toggle-off.btn-xs{padding-left:12px}
+
+
+
+
+
+
+	#tableimpresion {
+
+	}
+
+	#tabledetalle_impre{
+
+	}
+	#tableimpresionprincipal{
+
+	}
+	.centrado {
+	    text-align: center !important;
+	    align-content: center !important;
+	    margin: 14px auto !important;
+	}
+	.idheader{
+
+	    text-align: right !important;
+	    font-weight: 500 !important;
+		padding-right: 2px;
+	}
+	.input-group .form-control, .input-group-addon, .input-group-btn {
+	    display: table-cell!important;
+	    font-size: 9pt !important;
+	}
+
+	#tb_fechayhora{
+		text-align: center;
+	    align-content: center;
+	    align-items: center;
+	    display: inline-grid;
+	}
+
+	#templeado{
+
+	text-align: right !important;
+
+	width: 400px;
+
+	display: inline-flex;
+
+	font-weight: 100;
+
+	}
+
+	#tfecha {
+	    /* text-align: left !important; */
+	    font-weight: 100;
+	    display: inline-flex;
+	    padding: 5px;
+	    margin: 2px;
+	}
+
+
+
+
+	.trmonto{
+	display: none;
+	}
+	.totalapagar{
+
+	    display: flex;
+	    padding: 5px;
+	    margin: 5px;
+	}
+
+	.tabledetalle_impresion{
+	    display: none;
+	}
+
+	#fechahora{
+
+	    display: none;
+	   display: inline-flex;
+	}
+
+	#mesero{
+	    display: block;
+	}
+	#valuemesero{
+	display:    block;
+	}
+
+	#valuefecha p,#valuemesero p {
+	    font-weight: 500;
+	}
+	#tableimpresion_fs{
+		display: none;
+	}
+
+
+	#colcajas{
+
+
+		  width: 160px;
+	}
+
+	.modal_obtener_cajas{
+background: rgba(255,255,255,1);
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+	}
+#nombreCaja {
+    color: #000;
+    border: 1px solid #dbdbdb;
+    background: #cfcfcf;
+    background-color: rgb(255, 255, 255);
+    /* background-position-x: 0%; */
+    /* background-position-y: 0%; */
+    /* background-repeat: repeat; */
+    /* background-attachment: scroll; */
+    /* background-image: none; */
+    /* background-size: auto auto; */
+    /* background-origin: padding-box; */
+    /* background-clip: border-box; */
+    border-radius: 3px;
+    /* text-shadow: 0px 0px 20px rgba(95, 95, 95, 0.9); */
+    text-align: center;
+    /* height: 30px; */
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 6px;
+    margin-right: 0px;
+    margin-bottom: 4px;
+    margin-left: 0px;
+    /* width: 100%; */
+    padding: 2px;
+    height: 57px;
+    /* font-family: loRA; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+	.texttotal{
+	display: block;
+	}
+
+	.eliminarlinea{
+	    display: table-cell;
+	}
+
+	.btimpresion{
+	       background-color: #1f1211 !important;
+	    border-color: #d73925 !important;
+	}
+
+
+
+
+
+
+	#cajasid{
+	cursor: pointer;
+
+	width: 140px;
+
+	-webkit-box-shadow: 0px 2px 2px -1px rgba(0,0,0,0.75);
+
+	-moz-box-shadow: 0px 2px 2px -1px rgba(0,0,0,0.75);
+
+	box-shadow: 0px 2px 2px -1px rgba(0,0,0,0.75);
+
+	height: 205px;
+	}
+
+
+	#b_buscar_cajas {
+	    background: #06a1c7;
+	    color: #fafafa;
+	}
+
+	#modal-content{
+
+	}
+
+
+	.titulosm{
+
+		width: 40px;
+	    max-width: 30mm;
+	    word-break: break-all;
+	    border-top: 1px solid #f4f4f4;
+	}
+
+
+	.Titulos_impre{
+	border-top: 1px solid black !important;
+	}
+
+
+
+
+
+	#modal-dialog{
+		width: auto;
+		margin: 10px;
+
+	padding: 10px;
+	}
+
+	#modal-title{
+
+	background: #cfcfcf;
+
+	    background-color: rgb(207, 207, 207);
+	    background-position-x: 0%;
+	    background-position-y: 0%;
+	    background-repeat: repeat;
+	    background-attachment: scroll;
+	    background-image: none;
+	    background-size: auto auto;
+	    background-origin: padding-box;
+	    background-clip: border-box;
+
+	background-color: rgb(57, 117, 62);
+
+	background-position-x: 0%;
+
+	background-position-y: 0%;
+
+	background-repeat: repeat;
+
+	background-attachment: scroll;
+
+	background-image: none;
+
+	background-size: auto auto;
+
+	background-origin: padding-box;
+
+	background-clip: border-box;
+
+	border-radius: 7px;
+
+	text-shadow: 1px 1px 1px rgba(65, 65, 65, 0.9);
+
+	text-align: center;
+
+	height: 30px;
+
+	font-size: 20px;
+
+	cursor: pointer;
+
+	margin-top: 10px;
+
+	margin-right: 1px;
+
+	margin-bottom: 1px;
+
+	margin-left: 1px;
+
+	width: 95%;
+
+	font-family: loRA;
+
+	margin: 0px;
+
+	padding: 0px;
+	}
+
+
+	#eliminarlinea,#ch_impresion{
+	 // display: none;
+	}
+
+
+
+
+	.form-group input[type="checkbox"] {
+	    display: none;
+	}
+
+	.form-group input[type="checkbox"] + .btn-group > label span {
+	    width: 20px;
+	}
+
+	.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+	    display: none;
+	}
+	.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+	    display: inline-block;
+	}
+
+	.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+	    display: inline-block;
+	}
+	.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+	    display: none;
+	}
+
+	.checkmark{
+		display: none !important;
+	}
+
+	#ch_impresion{
+
+	}

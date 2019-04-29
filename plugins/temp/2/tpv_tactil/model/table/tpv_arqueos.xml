@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : tpv_arqueos.xml
+    Description:
+        Estructura de la tabla tpv_arqueos.
+-->
+<tabla>
+    <columna>
+        <nombre>abierta</nombre>
+        <tipo>boolean</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>b10</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b100</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b20</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b200</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b5</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b50</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b500</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b1000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b2000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b5000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b10000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b20000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b50000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>b100000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>diadesde</nombre>
+        <tipo>date</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>diahasta</nombre>
+        <tipo>date</tipo>
+    </columna>
+    <columna>
+        <nombre>idasiento</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>idtpv_arqueo</nombre>
+        <tipo>character varying(8)</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>inicio</nombre>
+        <tipo>double precision</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>m001</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m002</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m005</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m010</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m020</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m050</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m1</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m2</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m50</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m100</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m200</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m500</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>m1000</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>nogenerarasiento</nombre>
+        <tipo>boolean</tipo>
+        <nulo>NO</nulo>
+    </columna>
+    <columna>
+        <nombre>ptoventa</nombre>
+        <tipo>character varying(6)</tipo>
+    </columna>
+    <columna>
+        <nombre>sacadodecaja</nombre>
+        <tipo>double precision</tipo>
+    </columna>
+    <columna>
+        <nombre>totalcaja</nombre>
+        <tipo>double precision</tipo>
+    </columna>
+    <columna>
+        <nombre>totalmov</nombre>
+        <tipo>double precision</tipo>
+    </columna>
+    <columna>
+        <nombre>totaltarjeta</nombre>
+        <tipo>double precision</tipo>
+    </columna>
+    <columna>
+        <nombre>totalvale</nombre>
+        <tipo>double precision</tipo>
+    </columna>
+    <columna>
+        <nombre>idterminal</nombre>
+        <tipo>integer</tipo>
+    </columna>
+    <columna>
+        <nombre>codagente</nombre>
+        <tipo>character varying(10)</tipo>
+    </columna>
+    <restriccion>
+        <nombre>tpv_arqueos_pkey</nombre>
+        <consulta>PRIMARY KEY (idtpv_arqueo)</consulta>
+    </restriccion>
+</tabla>

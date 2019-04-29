@@ -1,0 +1,660 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<div class="contenedorprincipal_container" id="contenedorprincipal_container_id">
+
+
+
+ <meta property="og:image" content="http://kdzwinel.github.io/JS-OCR-demo/img/process.png" />
+ <link rel="image_src" href="http://kdzwinel.github.io/JS-OCR-demo/img/process.png" />
+
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+ <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+ <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&amp;subset=latin-ext" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/lib/noty.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/lib/themes/mint.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/animate.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/fonts/stylesheet.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/font-awesome/css/font-awesome.min.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/demo.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/jquery.Jcrop.min.css" />
+ <link rel="stylesheet" href="plugins/facturacion_base/view/css/main.css" />
+
+ <script src="plugins/facturacion_base/view/js/velocity.min.js"></script>
+
+ <script src="plugins/facturacion_base/view/js/mo.min.js"></script>
+
+ <script type="text/javascript" src="plugins/facturacion_base/view/js/bouncejs/bounce.js"></script>
+ <script type="text/javascript" src="plugins/facturacion_base/view/js/lib/noty.js"></script>
+ <script type="text/javascript" src="plugins/facturacion_base/view/js/demo.js"></script>
+
+
+ <div class="step1 container ">
+
+  <div id="contenedorprincipal" class="container">
+
+
+   <!--   <video id="player" controls autoplay></video>
+<button type="button"  id="close_modal_ocr"   aria-hidden="true" >&times;</button>
+
+<!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+
+
+   <button type="button" id="close_modal_ocr" aria-hidden="true">&times;</button>
+
+   <div id="vide1"> </div>
+
+   <div class="alert alert-danger"><strong>Oops!</strong> <span></span></div>
+
+   <div id="config_ocr" class="tab">
+
+    <div class="tab">
+     <button class="tablinks" onclick="openCity(event, 'agregadas')">Agregar por sugerencia</button>
+     <button class="tablinks" onclick="openCity(event, 'bloqueadas')">Bloqueadas</button>
+     <button class="tablinks btn_ocultar" onclick="$('#config_ocr').css('display', 'none');">ocultar</button>
+
+    </div>
+
+    <div id="agregadas" class="tabcontent">
+      <h1 id="titulo_ocr_tablas" class="bubbles">Diccionario de sugerencias.</h1>
+     <div class="contenedor_agregar_ocr">
+
+
+
+
+
+      <button type="button" class="btn btn-success button_agregar_palabra" id="agregar_td_ocr"> Agregar palara </button>
+      <button type="button" class="btn btn-success guardar_palabras_ocr_negativas"> Guardar palabras </button>
+      <button type="button" id="cargar_lista_palabras" class="btn btn-success cargar cargar_lista_palabras"> Cargar </button>
+      <button type="button" id="guardar_lista_palabras" class="btn btn-success cargar guardar_lista_palabras"> Guardar cambios </button>
+      <input type="hidden" id="evaluar" name="evaluar" value="">
+
+
+
+     </div>
+
+
+     <!--	<form action="" method="post"> -->
+     <table id="lista_productos" name="table_ocr" class="table">
+
+      <tbody>
+
+       <tr class="tr_ocr">
+
+        <td>
+
+         <input type="text"  name="sugerencia[]" id="sugerencia" class="sugerencia agregadas_bd form-control form-control-lg border border-primary" autocomplete="off" maxlength="20"   placeholder="   Sugerencia.  " onBlur="validacion_texto(sugerencia)" />
+        </td>
+
+        <td>
+
+         <input type="text" name="reemplazo[]" id="reemplazo" class="reemplazo agregadas_bd form-control form-control-lg " autocomplete="off" maxlength="20" minlength="5" placeholder="   Palabra reemplazo.  " onBlur="validacion_texto(reemplazo)" />
+        </td>
+
+        <td class="td_table_ocr">
+         <button type="button" class="button_agregar_producto btn btn-success" > Agregar palabra </button>
+        </td>
+
+        <td class="td_table_ocr">
+         <button type="button" id="button_eliminar_producto" class="btn btn-danger button_eliminar_producto"> Eliminar </button>
+        </td>
+
+
+       </tr>
+
+      </tbody>
+      <tfoot>
+       <tr>
+        <td colspan="3"> </td>
+        <td>
+
+        </td>
+       </tr>
+      </tfoot>
+     </table>
+     <!--	</form> -->
+
+
+
+
+     <table id="cargar_lista_palabras_table" name="cargar_lista_palabras_table" class="table cargar_lista_palabras_table">
+
+      <tbody>
+       <tr id="tr_class" class="tr_ls_suge">
+
+        <td>
+         <input type="hidde" name="listas_palabras[]" id="listas_palabras" class="listas_palabras palabras_carga form-control form-control-lg " autocomplete="off" maxlength="20" placeholder="" onBlur="validacion_texto(listas_palabras)" />
+        </td>
+        <td>
+         <input type="hidde" name="listas_palabras_sugerencia[]" id="listas_palabras_sugerencia"
+         class="listas_palabras_sugerencia palabras_carga form-control form-control-lg " autocomplete="off" maxlength="20" placeholder="" onBlur="validacion_texto(listas_palabras_sugerencia)"  />
+        </td>
+
+        <td class="td_table_ocr_usuario">
+         <button type="button" id="eliminar_sugerencia_usuario" class="btn btn-danger eliminar_sugerencia_usuario"> Eliminar </button>
+        </td>
+
+       </tr>
+
+
+
+
+
+      </tbody>
+      <tfoot>
+       <tr>
+        <td colspan="3"> </td>
+        <td>
+
+        </td>
+       </tr>
+      </tfoot>
+     </table>
+
+
+
+
+
+
+    </div>
+
+
+
+    <div id="bloqueadas" class="tabcontent">
+
+      <h1 id="titulo_ocr_tablas" class="bubbles">Palabras bloqueadas.</h1>
+
+     <div class="contenedor_agregar_ocr">
+      <button type="button" class="btn btn-success" id="agregar_td_ocr_bloque"> Agregar palara </button>
+      <button type="button" class="btn btn-success guardar_palabras_ocr_bloqueadas"> Guardar palabras </button>
+      <button type="button" id="cargar_lista_bloqueada" class="btn btn-success cargar cargar_lista_bloqueada"> Cargar palabras </button>
+      <button type="button" id="guardar_lista_bloque" class="btn btn-success cargar guardar_lista_bloque"> Guardar cambios </button>
+      <input type="hidden" id="evaluar" name="evaluar" value="">
+
+
+      <table id="lista_bloqueadas" name="lista_bloqueadas" class="table">
+
+       <tbody>
+        <tr class="tr_bloque_list">
+         <td>
+          <input type="text" name="bloquadas[]" id="bloquadas_id" class="bloquadas form-control form-control-lg " autocomplete="off"  maxlength="20" minlength="5" placeholder="    " onBlur="validacion_texto(bloquadas_id)" />
+         </td>
+
+         <td class="">
+          <button type="button" id="button_eliminar_producto_bloqueada" class="btn btn-danger button_eliminar_producto_bloqueada"> Eliminar </button>
+         </td>
+
+
+
+
+
+
+
+        </tr>
+
+
+       </tbody>
+       <tfoot>
+        <tr>
+         <td colspan="3"> </td>
+         <td>
+
+         </td>
+        </tr>
+       </tfoot>
+      </table>
+
+
+
+
+      <h1 id="titulo_ocr_tablas" class="bubbles">Lista de palabras en el sistema. </h1>
+
+      <table id="lista_bloqueadas_usuario" name="lista_bloqueadas_usuario" class="table">
+
+       <tbody>
+        <tr class="tr_ocr_bloque">
+
+         <td>
+          <input type="text" name="bloquadas_usuario[]" id="bloquadas_id_usuario" class="bloquadas_usuario form-control form-control-lg " autocomplete="off" maxlength="20" minlength="5" placeholder="" onBlur="validacion_texto(bloquadas_id_usuario)" />
+         </td>
+
+         <td class="td_table_ocr_usuario">
+          <button type="button" id="eliminar_bloqueada_usuario" class="btn btn-danger eliminar_bloqueada_usuario"> Eliminar </button>
+         </td>
+
+        </tr>
+
+
+       </tbody>
+       <tfoot>
+        <tr>
+         <td colspan="3"> </td>
+         <td>
+
+         </td>
+        </tr>
+       </tfoot>
+      </table>
+
+
+
+
+
+
+
+
+
+
+     </div>
+     </div>
+
+     <script type="text/javascript">
+      $(document).ready(function() {
+       //    tabla_ocr();
+
+
+
+      });
+     </script>
+
+     <div id="Tokyo" class="tabcontent">
+      <h3>Tokyo</h3>
+      <p>Tokyo is the capital of Japan.</p>
+     </div>
+
+     <script>
+      function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
+
+
+    </div>
+
+    <div class="jumbotron">
+
+
+
+
+
+     <div class='uno'>
+      <div id="titulo_de_operacion"></div>
+     </div>
+
+
+     <div id="step1">
+      <div id="contenedor_header_ocr">
+       <p class="lead">
+        <p> Carga tus facturas de una manera simple y rapido.</p>
+        <p id="sub">Capturar: click en la imagen.</p>
+        <i class="glyphicon glyphicon-question-sign help" data-placement="bottom" data-content="<img src='img/step2.png' />" data-html="true"></i>
+        <h1><i id="iconoCamara" class="glyphicon glyphicon-camera"></i></h1>
+
+        <select class="inpus dropdown btn btn-default dropdown-toggle" id="videoSource"></select>
+      </div>
+
+
+
+
+      <figure id="figure" class="not-ready">
+
+       <!--       <video id="player" controls autoplay></video>-->
+      </figure>
+
+      <div id="seleccion">
+
+       <div id="contenedor_botones">
+
+
+
+       </div>
+      </div>
+
+      <!-- <div id="progress_bar"><div class="percent progress-bar">0%</div></div> -->
+
+      <div>
+       <output id="list"></output>
+
+
+
+      </div>
+
+
+      <div id="video" autoplay>
+
+      </div>
+
+     </div>
+
+     <div class="step2lect">
+
+
+
+
+     </div>
+
+     <div id="step2" class="step2">
+
+
+
+
+      <h1><i class="glyphicon glyphicon-pencil iconedit"></i></h1>
+
+
+
+      <figure id="figure_step2">
+       <div id="contenedor_movil" class="row">
+
+
+
+       </div>
+
+
+
+
+       <div id="contenedor_progreso" class="row">
+         <div class="loader"></div>
+        <div class="progress">
+         <div id="ocr_status_progress"></div>
+         <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+        </div>
+       </div>
+
+
+
+       <canvas id="canvas" style="display:none">
+
+
+
+       </canvas>
+
+
+
+
+       <img src="" />
+
+
+
+
+
+
+      </figure>
+
+      <div id="ocr_results"> </div>
+      <div id="ocr_status">
+
+
+
+
+
+      </div>
+
+      <!-- <p>Brightness: <input type="range" min="0" max="100" id="brightness" value="20"></p>
+
+            <p>Contrast: <input type="range" min="0" max="100" id="contrast" value="90"></p>-->
+
+
+
+
+
+      <p id="demo"></p>
+
+      <!--<button onclick="recognizeFile('figure')">Sample Image</button>
+<button onclick="recognizeFile('plugins/facturacion_base/view/img/cosmic.png')">Sample Image</button>
+
+<input type="file" onchange="generar()">
+
+<script>
+
+function generar() {
+ var canvas = document.getElementById('canvas');
+var dataURL = canvas.toDataURL();
+console.log(dataURL);
+
+    recognizeFile(recognizeFile(dataURL));
+
+}
+
+-->
+
+
+
+      <div class="btn-group" id="panelherramiente">
+
+
+
+       <button class="btn btn-lg btn-success" id="adjust" disabled="disabled"></button>
+
+
+      </div>
+
+      <div id="comboidioma">
+
+
+       <select id="langsel" class="inpus dropdown btn btn-default dropdown-toggle selectidioma">
+        <!--  onchange="window.lastFile && recognizeFile(window.lastFile)" -->
+        <option value='afr'> Afrikaans </option>
+        <option value='ara'> Arabic </option>
+        <option value='aze'> Azerbaijani </option>
+        <option value='bel'> Belarusian </option>
+        <option value='ben'> Bengali </option>
+        <option value='bul'> Bulgarian </option>
+        <option value='cat'> Catalan </option>
+        <option value='ces'> Czech </option>
+        <option value='chi_sim'> Chinese </option>
+        <option value='chi_tra'> Traditional Chinese </option>
+        <option value='chr'> Cherokee </option>
+        <option value='dan'> Danish </option>
+        <option value='deu'> German </option>
+        <option value='ell'> Greek </option>
+        <option value='eng'>English </option>
+        <option value='enm'> English (Old) </option>
+        <option value='meme'> Internet Meme </option>
+        <option value='epo'> Esperanto </option>
+        <option value='epo_alt'> Esperanto alternative </option>
+        <option value='equ'> Math </option>
+        <option value='est'> Estonian </option>
+        <option value='eus'> Basque </option>
+        <option value='fin'> Finnish </option>
+        <option value='fra'> French </option>
+        <option value='frk'> Frankish </option>
+        <option value='frm'> French (Old) </option>
+        <option value='glg'> Galician </option>
+        <option value='grc'> Ancient Greek </option>
+        <option value='heb'> Hebrew </option>
+        <option value='hin'> Hindi </option>
+        <option value='hrv'> Croatian </option>
+        <option value='hun'> Hungarian </option>
+        <option value='ind'> Indonesian </option>
+        <option value='isl'> Icelandic </option>
+        <option value='ita'> Italian </option>
+        <option value='ita_old'> Italian (Old) </option>
+        <option value='jpn'> Japanese </option>
+        <option value='kan'> Kannada </option>
+        <option value='kor'> Korean </option>
+        <option value='lav'> Latvian </option>
+        <option value='lit'> Lithuanian </option>
+        <option value='mal'> Malayalam </option>
+        <option value='mkd'> Macedonian </option>
+        <option value='mlt'> Maltese </option>
+        <option value='msa'> Malay </option>
+        <option value='nld'> Dutch </option>
+        <option value='nor'> Norwegian </option>
+        <option value='pol'> Polish </option>
+        <option value='por'> Portuguese </option>
+        <option value='ron'> Romanian </option>
+        <option value='rus'> Russian </option>
+        <option value='slk'> Slovakian </option>
+        <option value='slv'> Slovenian </option>
+        <option value='spa' selected>Spanish </option>
+        <option value='spa_old'> Old Spanish </option>
+        <option value='sqi'> Albanian </option>
+        <option value='srp'> Serbian (Latin) </option>
+        <option value='swa'> Swahili </option>
+        <option value='swe'> Swedish </option>
+        <option value='tam'> Tamil </option>
+        <option value='tel'> Telugu </option>
+        <option value='tgl'> Tagalog </option>
+        <option value='tha'> Thai </option>
+        <option value='tur'> Turkish </option>
+        <option value='ukr'> Ukrainian </option>
+        <option value='vie'> Vietnamese </option>
+       </select>
+
+
+      </div>
+
+     </div>
+
+
+
+
+     <!-- /tesera -->
+
+
+
+    </div>
+    <div id="step3">
+
+     <h1><i class="glyphicon glyphicon-text-height"></i></h1>
+
+     <p class="lead">Ajustes finales.</p>
+
+
+
+
+     <figure>
+      <div id="log">
+
+
+
+      </div>
+
+      <canvas></canvas>
+     </figure>
+
+     <blockquote>
+
+      <p id="result"></p>
+
+      <footer></footer>
+     </blockquote>
+
+     <button class="btn btn-primary" id="go-back">VOLVER</button>
+     <button class="btn btn-primary" id="start-over">FINALIZAR</button>
+    </div>
+
+    <div id="header_pasos" class="header">
+
+
+
+
+
+     <ul id="nav_botones_ocr" class="nav nav-pills pull-right">
+
+
+      <label id="btn_ocr_class" class="btn_ocr_class">
+
+       <input name='Image' id="files" type="file" class="btn btn-success btn_ocr" /> Cargar Imagen </label>
+      <button type="button" id="btnabrircamara" class="btn_ocr_class" aria-hidden="true"> Escanear factura </button>
+      <button type="button" id="step1_herramienta" class="btn_ocr_class" aria-hidden="true"> Eliminar factura </button>
+
+      <button type="button" id="config" class="btn_ocr_class" aria-hidden="true"> Configuración </button>
+
+
+
+
+
+
+      </i>
+
+      <!--   <li class="disabled"><a href="#" data-step="2">#2 <i class="glyphicon glyphicon-pencil"></i></a></li>
+            <li class="disabled"><a href="#" data-step="3">#3 <i class="glyphicon glyphicon-text-height"></i></a></li> -->
+
+
+
+
+
+
+
+     </ul>
+
+
+
+    </div>
+   </div>
+
+
+
+
+
+
+
+
+
+   <!-- /container -->
+
+   <!--<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+
+
+   <!--<script src="plugins/facturacion_base/view/js/vendor/bootstrap.min.js"></script>-->
+
+
+   <!--OCR ------------------------------------------------------------------------------------------------------------------->
+   <script type="text/javascript" src="{$fsc->get_js_location('main_fs.js')}"></script>
+
+   <script type="text/javascript" src="{$fsc->get_js_location('tablas.js')}"></script>
+
+   <script src="plugins/facturacion_base/view/js/dist/tesseract.js"></script>
+
+   <script src="plugins/facturacion_base/view/js/vendor/modernizr.min.js"></script>
+
+
+   <script src="plugins/facturacion_base/view/js/vendor/jquery.Jcrop.js"></script>
+   <script src="plugins/facturacion_base/view/js/vendor/ocrad.min.js"></script>
+   <script src="plugins/facturacion_base/view/js/vendor/glfx.min.js"></script>
+
+
+   <script src="plugins/facturacion_base/view/js/ga.js"></script>
+
+
+
+
+
+   <!-- Social -->
+
+
+
+
+
+  </div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+ <!--/OCR -->

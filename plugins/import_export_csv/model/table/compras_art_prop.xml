@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : compras_art_prop.xml
+    Description:
+        Estructura de la tabla compras_art_prop.
+-->
+<tabla>
+   <columna>
+      <nombre>name</nombre>
+      <tipo>character varying(50)</tipo>
+      <nulo>NO</nulo>
+   </columna>
+   <columna>
+      <nombre>idartprov</nombre>
+      <tipo>integer</tipo>
+      <nulo>NO</nulo>
+   </columna>
+   <columna>
+      <nombre>text</nombre>
+      <tipo>text</tipo>
+   </columna>
+   <restriccion>
+      <nombre>compras_art_prop_pkey</nombre>
+      <consulta>PRIMARY KEY (name,idartprov)</consulta>
+   </restriccion>
+   <restriccion>
+      <nombre>ca_compras_art_prop_articulos</nombre>
+      <consulta>FOREIGN KEY (idartprov)
+      REFERENCES articulosprov (id)
+      ON DELETE CASCADE ON UPDATE CASCADE</consulta>
+   </restriccion>
+</tabla>

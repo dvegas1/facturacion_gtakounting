@@ -1,0 +1,13 @@
+{
+    "name": "vendor/import-export-csv",
+    "description": "Description of project import_export_csv.",
+    "authors": [
+        {
+            "name": "carlos",
+            "email": "your@email.here"
+        }
+    ],
+    "require": {
+        "parsecsv/php-parsecsv": "1.0.0"
+    }
+}

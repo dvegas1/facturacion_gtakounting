@@ -1,0 +1,61 @@
+{include="header2"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-6">
+         <div class="table-responsive">
+            <table class="table table-hover">
+               <thead>
+                  <tr>
+                     <th>Código de barras</th>
+                     <th class="text-right">Acciones</th>
+                  </tr>
+               </thead>
+               {loop="$fsc->codigos"}
+               <form action="{$fsc->url()}" method="post" class="form">
+                  <input type="hidden" name="ref" value="{$value->referencia}"/>
+                  <input type="hidden" name="id" value="{$value->id}"/>
+                  <tr>
+                     <td>
+                        <input type="text" name="codbarras" value="{$value->codbarras}" maxlength="18" class="form-control" autocomplete="off"/>
+                     </td>
+                     <td class="text-right">
+                        <div class="btn-group">
+                           <a href="{$fsc->url()}&ref={$fsc->referencia}&delete={$value->id}" class="btn btn-sm btn-danger" title="eliminar">
+                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                           </a>
+                           <button type="submit" class="btn btn-sm btn-primary" title="guardar">
+                              <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                           </button>
+                        </div>
+                     </td>
+                  </tr>
+               </form>
+               {/loop}
+               <form action="{$fsc->url()}" method="post" class="form">
+                  <input type="hidden" name="ref" value="{$fsc->referencia}"/>
+                  <tr class="info">
+                     <td>
+                        <input type="text" name="codbarras" maxlength="18" class="form-control" autocomplete="off"/>
+                     </td>
+                     <td class="text-right">
+                        <button type="submit" class="btn btn-sm btn-primary" title="guardar">
+                           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                        </button>
+                     </td>
+                  </tr>
+               </form>
+            </table>
+         </div>
+      </div>
+      <div class="col-sm-6">
+         <h2>Ayuda:</h2>
+         <ul>
+            <li>Puedes añadir todos los códigos de barras que quieras al artículo.</li>
+            <li>Podrás buscarlos desde el tpv táctil.</li>
+         </ul>
+      </div>
+   </div>
+</div>
+
+{include="footer2"}

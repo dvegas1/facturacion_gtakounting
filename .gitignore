@@ -1,12 +1,15 @@
-/.idea/
-/doc/
-/nbproject/
-/plugins/
-/tmp/
-/vendor/
-.DS_Store
-.htaccess
-.vscode
+extras/phpmailer/composer.lock
+nucleo/extras/phpmailer/composer.lock'
+tmp/
+vendor/
+nucleo/extras/phpmailer/composer.lock
+composer.lock
 config.php
-*.lock
+.htaccess
+
+
+
+
+
+
 

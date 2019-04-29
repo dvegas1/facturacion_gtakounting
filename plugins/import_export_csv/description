@@ -1,0 +1,14 @@
+<ul>
+   <li>
+      Permite importar/exportar artículos, fabricantes, familias, clientes, contactos y
+      proveedores mediante archivos CSV.
+   </li>
+   <li>
+      Añade la página compras &gt; artículos para que puedas gestionar el catálogo de
+      artículos que ofrecen tus proveedores.
+   </li>
+   <li>Puedes generar pedidos de compra a partir de los pedidos de venta pendientes.</li>
+</ul>
+<b>Accesible desde:</b><br/>
+Admin &gt; Importar/exportar CSV<br/>
+Compras &gt; Artículos.

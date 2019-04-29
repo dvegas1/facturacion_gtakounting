@@ -1,0 +1,204 @@
+{include="header"}
+<script src="plugins/caja_general/view/js/jquery.tablesorter.min.js"></script>
+<script src="plugins/caja_general/view/js/jquery.tablesorter.widgets.min.js"></script>
+
+<script type="text/javascript">
+   function get_modal_pago(id)
+   {
+      $.ajax({
+         type: 'POST',
+         url: '{$fsc->url()}&id={$fsc->cajaid}',
+         dataType: 'html',
+         data: 'ajax=TRUE&idapunte='+id,
+         success: function(datos) {
+            $("#div_editar_apunte").html(datos);
+            $("#modal_editar_apunte").modal('show');
+            document.f_editar_apunte.concepto.focus();
+        }
+      });
+    }
+   $(document).ready(function() {
+      $("#b_nuevo_pago").click(function(event) {
+         event.preventDefault();
+         $("#modal_nuevo_pago").modal('show');
+         document.f_nuevo_pago.nota.focus();
+      });
+      
+      $("#b_nuevo_ingreso").click(function(event) {
+         event.preventDefault();
+         $("#modal_nuevo_ingreso").modal('show');
+         document.f_nuevo_ingreso.nota.focus();
+      });
+      
+      $("#myTable").tablesorter({
+          widgets        : ['zebra', 'columns'],
+          usNumberFormat : false,
+          sortReset      : true,
+          sortRestart    : true
+      });      
+   });    
+</script>
+
+<div class="container-fluid hidden-print" style="margin-top: 10px; margin-bottom: 10px;">
+   <div class="row">
+      <!-- Estos botones se muestran siempre, ocupando 4 o 8 de las 12 columnas -->
+      <div class="col-sm-6">
+         <a href="index.php?page=caja_general" class="btn btn-sm btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+         </a>
+         <a href="#" id="b_imprimir" class="btn btn-sm btn-default" onclick="window.print();">
+            <span class="glyphicon glyphicon-print"></span>
+            <span class="hidden-xs">&nbsp; Imprimir</span>
+         </a>
+        {if="$fsc->cajaopen"}
+         <a href="#" id="b_nuevo_ingreso" class="btn btn-sm btn-success">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
+            <span class="hidden-xs">&nbsp; Nuevo Ingreso</span>
+         </a>  
+         <a href="#" id="b_nuevo_pago" class="btn btn-sm btn-danger">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 
+            <span class="hidden-xs">&nbsp; Nuevo Pago</span>
+         </a>
+        {/if}
+      </div>
+      <div class="col-sm-6 text-right">
+          <h2 style="margin-top: 0px;">Apuntes Caja Nº {$fsc->cajaid} - {$fsc->almacen->nombre}</h2>
+      </div>
+
+   </div>
+</div>
+
+<h2 class="visible-print">Apuntes Caja Nº {$fsc->cajaid} - Almacen: {$fsc->almacen->nombre} </h2>
+
+<ul class="nav nav-tabs hidden-print">
+   <li role="presentation"{if="!$fsc->tipo"} class="active"{/if}>
+      <a href="{$fsc->url()}&id={$fsc->cajaid}">Todos</a>
+   </li>
+   <li role="presentation"{if="$fsc->tipo=='ingresos'"} class="active"{/if}>
+      <a href="{$fsc->url()}&tipo=ingresos&id={$fsc->cajaid}">
+         <span class="glyphicon glyphicon-import"></span> &nbsp; Ingresos
+      </a>
+   </li>
+   <li role="presentation"{if="$fsc->tipo=='pagos'"} class="active"{/if}>
+      <a href="{$fsc->url()}&tipo=pagos&id={$fsc->cajaid}">
+         <span class="glyphicon glyphicon-export"></span> &nbsp; Pagos
+      </a>
+   </li>
+</ul>
+
+<div class="table-responsive">
+    <table class="table table-hover" id="myTable">
+        <thead>
+            <tr>
+                <th class="text-left">Apunte ID</th>
+                <th class="text-center">Empleado</th>
+                <th class="text-center">Fecha</th>
+                <th class="text-left">Nota</th>
+                <th class="text-right">Importe</th>
+            </tr>
+        </thead>
+        <!--{$total_caja=0}-->      
+        {loop="$fsc->resultados"}
+            {if="$fsc->allow_delete"}
+                {if="$fsc->cajaopen"}
+                    {if="$value->concepto!='Apertura de Caja'"}
+                        <tr class="{if="$value->apunte<=0"} bg-warning{/if}" href="#" onclick="get_modal_pago('{$value->cajamov_id}');return false;">
+                    {else}
+                        <tr class="{if="$value->apunte<=0"} bg-warning{/if}" href="#">
+                    {/if}                     
+                {else}
+                    <tr class="{if="$value->apunte<=0"} bg-warning{/if}" href="#">
+                {/if}
+            {else}
+                <tr class="{if="$value->apunte<=0"} bg-warning{/if}" href="#">
+            {/if}                      
+                <td>{$value->cajamov_id}</td>
+                <td class="text-center">
+                    {if="$value->codagente"}
+                        {$value->agente->get_fullname()}
+                    {else}
+                        -
+                    {/if}
+                </td>
+                <td class="text-center">{$value->f_apunte}</td>
+                <td class="text-left">{if="$value->concepto==''"}-{else}{$value->concepto}{/if}</td>
+                <td class="text-right">{$fsc->show_precio($value->apunte, FALSE, TRUE, 2)}</td>
+                <!--{$total_caja+=$value->apunte}-->
+            </tr>
+        {else}
+            <tr class="bg-warning">
+                <td colspan="5">Sin resultados.</td>
+            </tr>
+        {/loop}
+            <tr>
+                <td colspan="3"></td>
+                <td class="text-right"><b>Total: </b></td>
+                <td class="text-right"><b>{$fsc->show_precio($total_caja, FALSE, TRUE, 2)}</b></td>
+            </tr>
+    </table>
+</div> 
+
+<form name="f_nuevo_pago" class="form" action="{$fsc->url()}&id={$fsc->cajaid}" method="post">
+   <div class="modal" id="modal_nuevo_pago">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               <h4 class="modal-title" style="color: red">Nuevo Pago</h4>
+            </div>
+            <div class="modal-body">
+               <div class="form-group">
+                  Nota:
+                  <input type="text" name="nota" class="form-control" autocomplete="off"/>
+               </div>
+               <div class="form-group">
+                  Pagado:
+                  <input type="text" name="pago" class="form-control" value="0" autocomplete="off"/>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+                  <span class="glyphicon glyphicon-floppy-disk"></span> &nbsp; Guardar
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<form name="f_nuevo_ingreso" class="form" action="{$fsc->url()}&id={$fsc->cajaid}" method="post">
+   <div class="modal" id="modal_nuevo_ingreso">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+                <h4 class="modal-title" style="color: green">Nuevo Ingreso</h4>
+            </div>
+            <div class="modal-body">
+               <div class="form-group">
+                  Nota:
+                  <input type="text" name="nota" class="form-control" autocomplete="off"/>
+               </div>
+               <div class="form-group">
+                  Ingresado:
+                  <input type="text" name="ingreso" class="form-control" value="0" autocomplete="off"/>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+                  <span class="glyphicon glyphicon-floppy-disk"></span> &nbsp; Guardar
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+
+<div id="div_editar_apunte"></div>
+
+{include="footer"}

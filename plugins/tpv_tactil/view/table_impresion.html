@@ -1,0 +1,165 @@
+
+
+<div id="tabledetalle_impre_1" Class="tabledetalle_impre">
+
+
+{if="$fsc->comanda"}
+
+
+<div style="text-align:center">
+
+<table class="tableimpresion_d" style="text-align:center">
+      <thead>
+
+             <tr align="center">
+            
+            <th id="tfecha"><p class="idheader titulosm" style="text-align:center" > N º COMANDA  <p><p class="textresultado ">&nbsp;{$fsc->comanda->idtpv_comanda}.</p></th>
+
+
+
+            <tr align="center">
+            <th id="tfecha"><p class="idheader titulosm" style="text-align:center"> MESA  <p><p class="textresultado">&nbsp;{$fsc->cliente_s->nombre}.</p></th>
+              </center>
+          </tr>
+
+      </thead>
+      <tbody>
+
+</tbody>
+</table>
+</div>
+
+
+{/if}
+
+<center>
+     <img src="plugins/tpv_tactil/view/img/logo.png"  width="100px" height="100px">
+</center>
+
+
+  <table class="tableimpresion" id="tableimpresion_class">
+        <thead>
+           <tr class="tb_fechayhora">
+              <th id="tfecha"><p class="idheader titulosm">Fecha :&nbsp;<p><p class="textresultado" id="valuefecha">  </p></th>
+
+              <th id="tfecha"><p class="idheader">Empleado :&nbsp;<p><p class="textresultado" id="valuemesero"> </p></th>
+
+           </tr>
+        </thead>
+        <tbody>
+
+ </tbody>
+ </table>
+
+
+
+
+    <table id="tabledetalle_impre" class="table tableimpresionprincipal">
+       <thead>
+          <tr class="Titulos_impre">
+             <th class="text-left titulosm"></th>
+             <th class="text-left titulosm">Producto</th>
+             <th class="text-right titulosm" width="120">Cantidad</th>
+             <th class="text-right titulosm"  width="140">Precio c/u</th>
+             <th class="text-right eliminarlinea titulosm" width="160">TOTAL</th>
+          </tr>
+       </thead>
+       <tbody id="tpv_albaran1">
+       {if="$fsc->comanda"}
+
+          {loop="$fsc->comanda->get_lineas_impresion()"}
+          <tr id="linea1_{$counter+1}" class="warning magico">
+
+{if="$value->impresion==1"}
+<td>
+<input  type="hidden" class=" id_impresion"  id="impresion1_{$counter+1}" name=""
+id="impresion1_{$counter+1}"
+value="{$value->impresion}" checked disabled/>
+
+</td>
+
+{else}
+<td>
+<input  type="hidden" class="id_impresion" id="impresion1_{$counter+1}"
+onclick="validarCheck('impresion_{$counter+1}')"
+name="" id="impresion1_{$counter+1}" value="{$value->impresion}" checked disabled/>
+</td>
+{/if}
+
+
+<td class="referencia">
+
+<input type="hidden" name="referencia1_{$counter+1}" value="{$value->referencia}"/>
+                <input type="hidden" id="pvp1_{$counter+1}" name="pvp11_{$counter+1}" value="{$value->pvpunitario}"/>
+                <input type="hidden" id="iva1_{$counter+1}" name="iva1_{$counter+1}" value="{$value->iva}"/>
+                <input type="hidden" id="codimpuesto1_{$counter+1}" name="codimpuesto1_{$counter+1}" value="{$value->codimpuesto}"/>
+                <div class="input-group">
+                   <span class="input-group-addon">{$value->referencia}</span>
+                   <input type="text" class="form-control" name="desc1_{$counter+1}" value="{$value->descripcion}" onclick="this.select()"/>
+                </div>
+             </td>
+             <td>
+                <div class="input-group">
+                   <span class="input-group-btn eliminarlinea">
+                      <button class="btn btn-default eliminarlinea" type="button" value="-" onclick="linea_sum_ud1('{$counter+1}','-1')">-</button>
+                   </span>
+                   <input class="form-control text-right" type="text" id="cantidad1_{$counter+1}" name="cantidad1_{$counter+1}" value="{$value->cantidad}" onkeyup="recalcular()" autocomplete="off"/>
+                   <span class="input-group-btn eliminarlinea">
+                      <button class="btn btn-default eliminarlinea" type="button" value="+" onclick="linea_sum_ud('{$counter+1}','1')">+</button>
+                   </span>
+                </div>
+             </td>
+             <td >
+                {if="$fsc->tpv_config['tpv_linea_libre']"}
+                <div class="input-group">
+                   <input type="text" id="pvpi1_{$counter+1}" name="pvpi1_{$counter+1}" value="{$value->pvpunitario*(100+$value->iva)/100}" class="form-control text-right" onkeyup="set_pvpi('{$counter+1}')" onclick="this.select()"/>
+                   <span class="input-group-btn">
+                      <button class="btn btn-default eliminarlinea" type="button" onclick="get_keyboard('pvpi_11{$fsc->numlineas+$counter}','pvpi','{$fsc->numlineas+$counter}')">
+                         <span class="glyphicon glyphicon-th eliminarlinea" aria-hidden="true"></span>
+                      </button>
+                   </span>
+                </div>
+                {else}
+                <input type="text" id="pvpi1_{$counter+1}" name="pvpi1_{$counter+1}" value="{$value->pvpunitario*(100+$value->iva)/100}" class="form-control text-right eliminarlinea" readonly=""/>
+
+                {/if}
+             </td>
+             <td class="eliminarlinea">
+                <div class="input-group">
+                   <input class="form-control text-right texttotal"  type="text" id="pvpt1_{$counter+1}" name="pvpt1_{$counter+1}" disabled="disabled"/>
+                   <span class="input-group-btn">
+                      <button class="btn btn-danger texttotal" type="button"  onclick="$('#linea_{$counter+1}').remove();recalcular();">
+                         <span class="glyphicon glyphicon-trash eliminarlinea" aria-hidden="true"></span>
+                      </button>
+                   </span>
+                </div>
+             </td>
+          </tr>
+          {else}
+
+          {/loop}
+       {else}
+          <tr>
+
+          </tr>
+       {/if}
+       </tbody>
+    </table>
+
+
+
+
+
+
+ <table id="table_monto_total">
+<thead>
+   <trclass="trmonto">
+      <th  id="monto_impresion" class= "titulosm"> <b><p id="valorapagar">  </p></b></th>
+   </tr>
+</thead>
+<tbody id="tpv_albaran1">
+
+</tbody>
+</table>
+
+ </div>

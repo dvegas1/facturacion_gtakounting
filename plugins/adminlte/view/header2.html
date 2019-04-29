@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es" >
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <title>{$fsc->page->title} &lsaquo; {if="$fsc->empresa->nombrecorto"}{$fsc->empresa->nombrecorto}{else}{$fsc->empresa->nombre}{/if}</title>
+   <meta name="description" content="{$fsc->empresa->nombre}" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta name="generator" content="FacturaScripts" />
+   <link rel="shortcut icon" href="{#FS_PATH#}view/img/favicon.ico" />
+   <link rel="stylesheet" href="{#FS_PATH#}view/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="{#FS_PATH#}view/css/font-awesome.min.css" />
+   <link rel="stylesheet" href="{#FS_PATH#}plugins/adminlte/view/css/AdminLTE.min.css" />
+   <link rel="stylesheet" href="{#FS_PATH#}plugins/adminlte/view/css/skins/_all-skins.min.css" />
+   <link rel="stylesheet" href="{#FS_PATH#}view/css/datepicker.css" />
+   <link rel="stylesheet" href="{#FS_PATH#}view/css/custom.css" />
+   <script type="text/javascript" src="{#FS_PATH#}view/js/jquery.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/ventas_articulos.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/bootstrap-datepicker.js" charset="UTF-8"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/jquery.autocomplete.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/bootbox.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}plugins/adminlte/view/js/jquery.slimscroll.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}plugins/adminlte/view/js/app.min.js"></script>
+   <script type="text/javascript" src="{#FS_PATH#}view/js/base.js?updated={$fsc->today()}"></script>
+   <script type="text/javascript">
+
+
+
+    
+      function show_precio(precio, coddivisa)
+      {
+         coddivisa || ( coddivisa = '{$fsc->empresa->coddivisa}' );
+         
+         if(coddivisa == '{$fsc->empresa->coddivisa}')
+         {
+            {if="FS_POS_DIVISA=='right'"}
+            return number_format(precio, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}')+' {$fsc->simbolo_divisa()}';
+            {else}
+            return '{$fsc->simbolo_divisa()}'+number_format(precio, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}');
+            {/if}
+         }
+         else
+         {
+            return number_format(precio, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}');
+         }
+      }
+      function show_numero(numero)
+      {
+         return number_format(numero, {#FS_NF0#}, '{#FS_NF1#}', '{#FS_NF2#}');
+      }
+   </script>
+   {loop="$fsc->extensions"}
+      {if="$value->type=='head'"}{$value->text}{/if}
+   {/loop}
+</head>
+<body>
+   {if="$fsc->get_errors()"}
+   <div class="alert alert-danger hidden-print">
+      <ul>{loop="$fsc->get_errors()"}<li>{$value}</li>{/loop}</ul>
+   </div>
+   {/if}
+   {if="$fsc->get_messages()"}
+   <div class="alert alert-success hidden-print">
+      <ul>{loop="$fsc->get_messages()"}<li>{$value}</li>{/loop}</ul>
+   </div>
+   {/if}
+   {if="$fsc->get_advices()"}
+   <div class="alert alert-info hidden-print">
+      <ul>{loop="$fsc->get_advices()"}<li>{$value}</li>{/loop}</ul>
+   </div>
+   {/if}

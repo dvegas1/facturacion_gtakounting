@@ -1,0 +1,40 @@
+{include="header2"}
+
+{if="$fsc->agente"}
+<form action="{$fsc->url()}" method="post" class="form">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-12">
+            <p class="help-block">
+               Define aquí el PIN y código RFID del empleado, así podrás proteger
+               el cambio rápido desde el TPV Táctil.
+            </p>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-2">
+            <div class="form-group">
+               PIN:
+               <input type="text" name="pin" value="{$fsc->agente->pin}" class="form-control" autocomplete="off"/>
+               <p class="help-block">Dejar en blanco para no usar.</p>
+            </div>
+         </div>
+         <div class="col-sm-3">
+            <div class="form-group">
+               RFID:
+               <input type="text" name="rfid" value="{$fsc->agente->rfid}" class="form-control" autocomplete="off"/>
+               <p class="help-block">Dejar en blanco para no usar.</p>
+            </div>
+         </div>
+         <div class="col-sm-7">
+            <br/>
+            <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();">
+               <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Guardar
+            </button>
+         </div>
+      </div>
+   </div>
+</form>
+{/if}
+
+{include="footer2"}

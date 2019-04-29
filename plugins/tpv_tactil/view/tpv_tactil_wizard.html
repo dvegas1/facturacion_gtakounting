@@ -1,0 +1,108 @@
+{include="header"}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header">
+                <h1>
+                    <i class="fa fa-smile-o" aria-hidden="true"></i> Asistente
+                </h1>
+                <p class="help-block">
+                    Muchas gracias por comprar el plugin tpv_tactil.
+                    Ya tienes disponible el TPV desde <b>TPV &gt; TPV táctil</b>.
+                </p>
+            </div>
+            <p>
+                Este TPV permite pagos con dos formas de pago: efectivo o tarjeta,
+                pero primero tienes que configurarlas.
+            </p>
+        </div>
+    </div>
+    <form action="{$fsc->url()}" method="post" class="form">
+        <div class="row bg-info">
+            <div class="col-sm-6">
+                <h3>Forma de pago en efectivo</h3>
+                <div class="form-group">
+                    <select name="pago_efectivo" class="form-control">
+                        {loop="$fsc->forma_pago->all()"}
+                        {if="$value->codpago==$fsc->tpv_config['tpv_fpago_efectivo']"}
+                        <option value="{$value->codpago}" selected="">{$value->descripcion}</option>
+                        {else}
+                        <option value="{$value->codpago}">{$value->descripcion}</option>
+                        {/if}
+                        {/loop}
+                    </select>
+                    <p class="help-block">
+                        Selecciona la forma de pago que quieras usar como forma de pago
+                        en efectivo para el TPV.
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <h3>Forma de pago con tarjeta</h3>
+                <div class="form-group">
+                    <select name="pago_tarjeta" class="form-control">
+                        {loop="$fsc->forma_pago->all()"}
+                        {if="$value->codpago==$fsc->tpv_config['tpv_fpago_tarjeta']"}
+                        <option value="{$value->codpago}" selected="">{$value->descripcion}</option>
+                        {else}
+                        <option value="{$value->codpago}">{$value->descripcion}</option>
+                        {/if}
+                        {/loop}
+                    </select>
+                    <p class="help-block">
+                        Selecciona la forma de pago que quieras usar como forma de pago
+                        con tarjeta para el TPV. Si eliges ninguna, solamente se podrá
+                        pagar en efectivo.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                    &nbsp; Familias
+                </h3>
+                <p class="help-block">
+                    Selecciona las familias que quieres que aparezcan en el listado
+                    del TPV. Recuerda que ahora ya puedes añadir imágenes a las familias.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            {loop="$fsc->familia->all()"}
+            <div class="col-sm-3">
+                <div class="checkbox-inline">
+                    <label>
+                        {if="$fsc->familia_checked($value->codfamilia)"}
+                        <input type="checkbox" name="familia[]" value="{$value->codfamilia}" checked=""/>
+                        {else}
+                        <input type="checkbox" name="familia[]" value="{$value->codfamilia}"/>
+                        {/if}
+                        {$value->descripcion}
+                    </label>
+                </div>
+            </div>
+            {/loop}
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <br/>
+                <div class="form-group">
+                    Texto al final del ticket:
+                    <textarea name="texto" class="form-control" rows="5">{$fsc->tpv_config['tpv_texto_fin']}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-right">
+                <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled = true;this.form.submit();">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> &nbsp; Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{include="footer"}

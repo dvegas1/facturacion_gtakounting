@@ -1,0 +1,3 @@
+sList.add('lh-passed-audits');elements.forEach(elem=>passedElem.appendChild(elem));return passedElem;}
+_renderManualAudits(manualAudits,groupDefinitions,element){const auditsGroupedByGroup=({});manualAudits.forEach(audit=>{const group=auditsGroupedByGroup[audit.group]||[];group.push(audit);auditsGroupedByGroup[audit.group]=group;});Object.keys(auditsGroupedByGroup).forEach(groupId=>{const group=groupDefinitions[groupId];const auditGroupElem=this._renderAuditGroup(group,{expandable:true});auditGroupElem.classList.add('lh-audit-group--manual');auditsGroupedByGroup[groupId].forEach(audit=>{auditGroupElem.appendChild(this._renderAudit(audit));});element.appendChild(auditGroupElem);});}
+setTemplateContext(context){this._templateContext=

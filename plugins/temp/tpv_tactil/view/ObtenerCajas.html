@@ -1,0 +1,46 @@
+
+  <div class="modal fade" id="MymodalCajas" role="dialog">
+    <div id="modal-dialog" class="modal-dialog">
+
+      <!-- Modal content-->
+      <div id="modal-content" class="modal-content modal_obtener_cajas">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+<!--          <h4 id="modal-title" class="modal-title">CAJAS</h4> -->
+        </div>
+        <div class="modal-body modal_obtener_cajas">
+
+
+
+                     <div class="container-fluid contenedor_cajas_f">
+                     <div class="row row_cajas">
+                          {loop="$fsc->cajas"}
+                        <div id="colcajas" class="col-lg-3 col-md-6 col-sm-6">
+
+
+                           <a  id="cajasid" class="thumbnail cajas">
+                              <img src="https://www.gtakounting.com/ACNI/images/indice.jpg"/>
+
+                              <p id="nombreCaja">{$value}</p>
+                           </a>
+                           <br/>
+                        </div>
+
+
+                        {/loop}
+                     </div>
+                  </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="plugins/tpv_tactil/view/css/main.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
