@@ -1,0 +1,401 @@
+.content-wrapper {
+    min-height: 1304.4px;
+    /* background-color: #fff6f6; */
+    background: white url(../img/bg-site.jpg) fixed repeat-x 0 0;
+    color: #555555;
+    line-height: 17px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 500;
+    color: #4e617f;
+}
+
+.skin-blue .sidebar a {
+    color: #e2e2e2;
+    font-size: 11pt;
+}
+
+.skin-blue .sidebar a:hover {
+    text-decoration: none;
+    background: #0077ff;
+}
+
+.sidebar-menu>li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.main-header .sidebar-toggle {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: 17px 22px;
+    font-family: fontAwesome;
+}
+
+.btn-primary {
+    background-color: #07679f !important;
+    border-color: #367fa9;
+    padding: 7px;
+}
+
+.titulo_control {
+    text-shadow: 0px -1px 1px white !important;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+    color: black !important;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.panel-body {
+    padding: 10px;
+    margin: 7px;
+}
+
+.nav>li>a:hover,
+.nav>li>a:active,
+.nav>li>a:focus {
+    background: #0e9ff2;
+    color: white !important;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    /* background-color: #fff6f6; */
+    background: white url(../img/bg-site.jpg) fixed repeat-x 0 0;
+    color: #555555;
+    direction: ltr;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13pt !important;
+    line-height: 17px;
+}
+
+.main-header .logo {
+    -webkit-transition: width .3s ease-in-out;
+    -o-transition: width .3s ease-in-out;
+    transition: width .3s ease-in-out;
+    display: block;
+    float: left;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    width: 230px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 0 15px;
+    font-weight: 300;
+    overflow: hidden;
+    text-shadow: 0px 3px 3px #000000;
+}
+
+.skin-blue .main-header .logo {
+    background-color: #0e9ff2;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+
+.skin-blue .main-header .navbar {
+    background-color: #0f354b;
+    box-shadow: 0px 2px 1px #5a707d78;
+}
+
+.panel-warning {
+    border-color: #faebcc;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.jumbotron {
+    /* padding-top: 5px !important; */
+    /* padding-left: 20px !important; */
+    /* padding-right: 20px !important; */
+    /* padding-bottom: 216px; */
+    margin: 0 auto;
+    background: white;
+}
+
+.jumbotron p {
+    font-size: 19px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, .9);
+    font-weight: 600;
+}
+
+#table_art_detall {
+    padding-top: 3px;
+}
+
+.table-responsive {
+    background: #e7e9eb;
+    padding-bottom: 13px;
+    border: 1px solid #d7d7d7;
+}
+
+#form_vdiaria {
+    background: #e7e9eb;
+    padding-bottom: 13px;
+    border: 1px solid #d7d7d7;
+}
+
+#iconoCamara {
+    font-size: 30px;
+}
+
+.panel-info>.panel-heading {
+    color: #ffffff;
+    background-color: #405f74;
+    /* border-color: #bce8f1; */
+}
+
+select.form-control {
+    background: #4b6174;
+    color: white;
+    cursor: pointer;
+}
+
+.t_coste {
+    background: #c7c5e5;
+}
+
+.t_iva {
+    background: #c5e5db;
+}
+
+tr {
+    text-align: center;
+}
+
+tr {
+    background: #e3e3e3;
+    box-shadow: 0px 1px 1px #888888;
+}
+
+.panel,
+.panel-info,
+.panel-heading,
+.table-responsive {
+    box-shadow: 0px 1px 1px #bdbdbd;
+}
+
+.warning {
+    background: #ff00002e;
+}
+
+.panel-warning>.panel-heading,
+.panel-heading {
+    color: #ffffff !important;
+    border-color: #c9cccc !important;
+    margin-bottom: 4px !important;
+    background-color: #596c7a !important;
+}
+
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14pt;
+    color: inherit;
+}
+
+.table>tbody>tr.warning>td,
+.table>tbody>tr.warning>th,
+.table>tbody>tr>td.warning,
+.table>tbody>tr>th.warning,
+.table>tfoot>tr.warning>td,
+.table>tfoot>tr.warning>th,
+.table>tfoot>tr>td.warning,
+.table>tfoot>tr>th.warning,
+.table>thead>tr.warning>td,
+.table>thead>tr.warning>th,
+.table>thead>tr>td.warning,
+.table>thead>tr>th.warning {
+    background-color: #ffffff00 !important;
+}
+
+.table>tbody>tr.warning>td,
+.table>tbody>tr.warning>th,
+.table>tbody>tr>td.warning,
+.table>tbody>tr>th.warning,
+.table>tfoot>tr.warning>td,
+.table>tfoot>tr.warning>th,
+.table>tfoot>tr>td.warning,
+.table>tfoot>tr>th.warning,
+.table>thead>tr.warning>td,
+.table>thead>tr.warning>th,
+.table>thead>tr>td.warning,
+.table>thead>tr>th.warning {
+    background-color: #ffffff;
+}
+
+.totalcventa {
+    color: white;
+    background: #5e1889 !important;
+}
+
+.total_general_f,
+.totalpventa,
+.totalcventa {
+    color: white;
+    height: 20px;
+    vertical-align: text-top;
+    line-height: 21.1px !important;
+    font-size: 12pt;
+    background: #18895b;
+    text-align: center !important;
+}
+
+.result_total_g {
+    background: #33699d !important;
+}
+
+#form_vdiaria {
+    background: #e7e9eb;
+    padding-bottom: 13px;
+}
+
+.panel-info {
+    border-color: #00ffff00;
+}
+
+td {
+    font-size: x-small;
+}
+
+.panel>.table-responsive {
+    margin-bottom: 0;
+    border: 1px solid #cccccc;
+}
+
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
+.table>tfoot>tr>td {
+    border: 2px solid #ffffff;
+    text-align: left;
+}
+
+.table-hover>tbody>tr:hover {
+    background-color: #9acae1;
+}
+
+th,
+tr {
+    cursor: pointer;
+    box-shadow: 0px 1px 1px #888888;
+}
+
+th1 {
+    background: #2a3e4b;
+    font-size: 13pt;
+    margin: 10px !important;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+}
+
+th {
+    background: #ececec;
+    line-height: 20px !important;
+    font-size: smaller;
+    font-weight: 200 !important;
+    border-bottom: 1px solid #ffffff !important;
+    border-top: 1px solid #ffffff !important;
+    color: white;
+    background: rgba(47, 107, 163, 1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(47, 107, 163, 1) 0%, rgba(57, 101, 148, 1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(47, 107, 163, 1)), color-stop(100%, rgba(57, 101, 148, 1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(47, 107, 163, 1) 0%, rgba(57, 101, 148, 1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(47, 107, 163, 1) 0%, rgba(57, 101, 148, 1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(47, 107, 163, 1) 0%, rgba(57, 101, 148, 1) 100%);
+    background: radial-gradient(ellipse at center, rgba(47, 107, 163, 1) 0%, rgba(57, 101, 148, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#2f6ba3', endColorstr='#396594', GradientType=1);
+    border-left: 1px solid white;
+}
+
+.th_ {
+    background: #3089c8;
+    font-size: 11pt;
+    margin: 10px !important;
+    /* padding: 10px !important; */
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    /* border-top-left-radius: 3px; */
+    /* border-top-right-radius: 3px; */
+}
+
+
+}
+.jumbotron h1 {
+    font-size: 18px;
+}
+#sub {
+    font-size: 14px;
+}
+#canvas {
+    display: none !important;
+}
+.jumbotron #step1 video,
+.jumbotron #step2 figure>img,
+.jumbotron #step3 figure>canvas {
+    max-width: 100%;
+    z-index: -500 !important;
+    width: 100%;
+    height: auto;
+    position: absolute;
+}
+.jumbotron .tooltip {
+    opacity: 1;
+}
+.jumbotron .popover {
+    width: 272px;
+}
+.popover img {
+    width: 100%;
+}
+.table>tbody>tr.warning>td,
+.table>tbody>tr.warning>th,
+.table>tbody>tr>td.warning,
+.table>tbody>tr>th.warning,
+.table>tfoot>tr.warning>td,
+.table>tfoot>tr.warning>th,
+.table>tfoot>tr>td.warning,
+.table>tfoot>tr>th.warning,
+.table>thead>tr.warning>td,
+.table>thead>tr.warning>th,
+.table>thead>tr>td.warning,
+.table>thead>tr>th.warning {
+    background-color: #ffffff00 !important;
+}
