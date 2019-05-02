@@ -5,8 +5,7 @@
     "homepage": "https://github.com/PHPOffice/PhpSpreadsheet",
     "type": "library",
     "license": "LGPL-2.1-or-later",
-    "authors": [
-        {
+    "authors": [{
             "name": "Maarten Balliauw",
             "homepage": "https://blog.maartenballiauw.be"
         },

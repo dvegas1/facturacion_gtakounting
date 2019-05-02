@@ -5,7 +5,6 @@ require_once 'base/fs_file_manager.php';
 /**
  * Description of fs_plugin_manager
  *
- * @author Carlos García Gómez <neorazorx@gmail.com>
  */
 class fs_plugin_manager
 {
@@ -211,8 +210,8 @@ class fs_plugin_manager
                 'nombre' => "facturacion_base",
                 'tipo' => "gratis",
                 'descripcion' => "Plugin con las funciones básicas de facturación, contabilidad e informes simples.",
-                'link' => "https://github.com/NeoRazorX/facturacion_base",
-                'zip_link' => "https://github.com/NeoRazorX/facturacion_base/archive/master.zip",
+                'link' => "https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/",
+                'zip_link' => "https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/nucleo_origen.zip",
                 'imagen' => "",
                 'estable' => true,
                 'version' => 140,

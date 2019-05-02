@@ -51,7 +51,7 @@ $updater = new fs_updater();
                     </a>
                     <div class="page-header">
                         <h1>
-                            <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Actualizador de FacturaScripts
+                            <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Actualizador  Gtakounting
                         </h1>
                     </div>
                     <?php

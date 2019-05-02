@@ -1,8 +1,0 @@
-entLoaded=true;this._content=content;fulfill(content);});}
-return this._requestContentPromise;}
-checkContentUpdated(){if(!this._contentLoaded&&!this._forceLoadOnCheckContent)
-return;if(!this._project.canSetFileContent()||this._checkingContent)
-return;this._checkingContent=true;this._project.requestFileContent(this,contentLoaded.bind(this));function contentLoaded(updatedContent){this._checkingContent=false;if(updatedContent===null){var workingCopy=this.workingCopy();this._contentCommitted('',false);this.setWorkingCopy(workingCopy);return;}
-if(this._lastAcceptedContent===updatedContent)
-return;if(this._content===updatedContent){this._lastAcceptedContent=null;return;}
-if(!this.isDirty()||this._workingCopy===updatedContent){this._c

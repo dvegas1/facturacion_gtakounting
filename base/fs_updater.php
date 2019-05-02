@@ -107,6 +107,8 @@ class fs_updater extends fs_app
         }
     }
 
+    
+
     private function actualizar_nucleo()
     {
         $urls = array(
@@ -114,16 +116,94 @@ class fs_updater extends fs_app
             'https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/'
         );
 
+
+      //  file_put_contents("Tmpfile.zip", fopen("https://github.com/dvegas1/nucleo_origen/blob/master/nucleo_origen.zip", 'r'));
+
+
+
         foreach ($urls as $url) {
-            if (!@fs_file_download($url, FS_FOLDER . '/update-core.zip')) {
+            if (!@fs_file_download($url, FS_FOLDER . '/nucleo_origen.zip')) {
                 $this->core_log->new_error('Error al descargar el archivo update-core.zip. Intente de nuevo en unos minutos.');
                 continue;
             }
 
+
+
+
+// Path of the directory to be zipped
+ /*$dirPath = FS_FOLDER;
+
+// Path of output zip file
+$zipPath = FS_FOLDER . '/archive-'.time().'.zip';
+
+// Create zip archive
+$zip =$this->zipDir($dirPath, $zipPath);
+
+if($zip){
+    echo 'ZIP archive created successfully.';
+}else{
+    echo 'Failed to create ZIP.';
+}*/
+
+
+$zip = new ZipArchive(); 
+$filename = 'test.zip'; 
+
+$files = ["updater.php,composer.json,VERSION,api.php,index.php,cron.php,
+README.md,.gitignore,composer.lock,CONTRIBUTING.md,COPYING,install.php,
+robots.txt,.git,vendor,src,PhpSpreadsheet,extras,view,tmp,model,images,controller,base"];
+if($zip->open($filename,ZIPARCHIVE::CREATE)===true) 
+
+
+
+
+{   
+/*
+$zip->addFile("updater.php");
+$zip->addFile("composer.json");
+$zip->addFile("VERSION");
+$zip->addFile("api.php");
+$zip->addFile("index.php");
+$zip->addFile("cron.php");
+$zip->addFile("README.md");
+$zip->addFile(".gitignore");
+$zip->addFile("composer.lock");
+$zip->addFile("CONTRIBUTING.md");
+$zip->addFile("COPYING");
+$zip->addFile("install.php");
+$zip->addFile("robots.txt");
+$zip->addFile(".git");
+$zip->addFile("vendor");
+$zip->addFile("src");
+$zip->addFile("PhpSpreadsheet");
+$zip->addFile("extras");
+$zip->addFile("view");
+$zip->addFile("tmp");
+$zip->addFile("model");
+$zip->addFile("images");
+$zip->addFile("images");
+$zip->addFile("controller");
+$zip->addFile("base");*/
+$zip->addFile("zip");
+    $zip->close(); 
+    echo 'Creado '.$filename; } 
+    
+    else { 
+        
+        echo 'Error creando '.$filename; 
+    
+    }
+         
+
+            
             $zip = new ZipArchive();
             $zip_status = $zip->open(FS_FOLDER . '/nucleo_origen.zip', ZipArchive::CHECKCONS);
+
+            $this->core_log->new_error($zip_status);
+
+
             if ($zip_status !== TRUE) {
-                $this->core_log->new_error('Ha habido un error con el archivo update-core.zip. Código: ' . $zip_status
+                $this->core_log->new_error('Ha habido un error con el archivo nucleo_origen.zip. Código: ' . $zip_status
                     . '. Intente de nuevo en unos minutos.');
                 return false;
             }
@@ -147,6 +227,78 @@ class fs_updater extends fs_app
         }
 
         return false;
+    }
+
+    
+/*
+* Zip una carpeta (incluyéndose a sí misma).
+*
+* Uso:
+* Carpeta de ruta que debe estar comprimida.
+*
+* @param $ sourcePath cadena
+* Ruta relativa del directorio a ser comprimido.
+*
+* @param $ outZipPath string
+* Ruta del archivo zip de salida.
+*
+*/
+
+    public  function zipDir($sourcePath, $outZipPath){
+        $pathInfo = pathinfo($sourcePath);
+        $parentPath = $pathInfo['dirname'];
+        $dirName = $pathInfo['basename'];
+    
+        $z = new ZipArchive();
+        $z->open($outZipPath, ZipArchive::CREATE);
+        $z->addEmptyDir($dirName);
+        if($sourcePath == $dirName){
+            self::dirToZip($sourcePath, $z, 0);
+        }else{
+            self::dirToZip($sourcePath, $z, strlen("$parentPath/"));
+        }
+        $z->close();
+        
+        return true;
+    }
+    
+
+
+
+    /*
+    * Agregar archivos y subdirectorios en una carpeta al archivo zip.
+    *
+    * @param $ folder string
+    * Carpeta de ruta que debe estar comprimida.
+    *
+    * @param $ zipFile ZipArchive
+    * Archivo zip donde terminan los archivos.
+    *
+    * @param $ exclusiveLength int
+    * Número de texto que se excluirá de la ruta del archivo.
+    *
+    */
+
+
+
+    private  function dirToZip($folder, &$zipFile, $exclusiveLength){
+        $handle = opendir($folder);
+        while(FALSE !== $f = readdir($handle)){
+            // Check for local/parent path or zipping file itself and skip
+            if($f != '.' && $f != '..' && $f != basename(__FILE__)){
+                $filePath = "$folder/$f";
+                // Remove prefix from file path before add to zip
+                $localPath = substr($filePath, $exclusiveLength);
+                if(is_file($filePath)){
+                    $zipFile->addFile($filePath, $localPath);
+                }elseif(is_dir($filePath)){
+                    // Add sub-directory
+                    $zipFile->addEmptyDir($localPath);
+                    self::dirToZip($filePath, $zipFile, $exclusiveLength);
+                }
+            }
+        }
+        closedir($handle);
     }
 
     private function actualizar_plugin($plugin_name)
@@ -391,7 +543,9 @@ class fs_updater extends fs_app
 
         $version_actual = $this->plugin_manager->version;
         $this->updates['version'] = $version_actual;
-        $nueva_version = @fs_file_get_contents('https://github.com/dvegas1/facturacion_gtakounting/blob/master/nucleo_origen/VERSION');
+        $nueva_version = @fs_file_get_contents('https://raw.githubusercontent.com/dvegas1/nucleo_origen/master/VERSION');
+
+
         if (floatval($version_actual) < floatval($nueva_version)) {
             $this->updates['core'] = $nueva_version;
         } else {
@@ -417,7 +571,6 @@ class fs_updater extends fs_app
             $this->core_log->new_error('Error al guardar la clave.');
         }
     }
-
     private function process()
     {
         /// solamente comprobamos si no hay que hacer nada

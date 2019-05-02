@@ -1,5 +1,5 @@
 <?php
-/*
+
 define('FS_FOLDER', __DIR__);
 
 /// cargamos las constantes de configuración
@@ -27,4 +27,4 @@ if ($db->connected()) {
 $log_manager = new fs_log_manager();
 $log_manager->save();
 
-$db->close();*/
+$db->close();

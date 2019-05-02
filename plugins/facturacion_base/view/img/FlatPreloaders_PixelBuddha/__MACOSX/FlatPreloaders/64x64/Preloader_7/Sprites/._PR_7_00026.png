@@ -1,4 +1,0 @@
-extensions.length){this._sendErrorResponse(message['id'],'Could not resolve service \''+serviceName+'\'');return;}
-extensions[0].instance().then(object=>{var id=String(this._lastObjectId++);object.setNotify(this._notify.bind(this,id,serviceName));this._objects.set(id,object);this._sendResponse(message['id'],{id:id});});}else if(method==='dispose'){var object=this._objects.get(message['params']['id']);if(!object){console.error('Could not look up object with id for '+JSON.stringify(message));return;}
-this._objects.delete(message['params']['id']);object.dispose().then(()=>this._sendResponse(message['id'],{}));}else{if(!message['params']){console.error('No params in the message: '+JSON.stringify(message));return;}
-var object=this._obj
